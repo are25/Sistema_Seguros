@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio Sesión</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/fuentes")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/login")
+</head>
+<body style="background-image: url('/Content/images/bg-01.jpg');">
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100 p-t-30 p-b-50">
+                <span class="login100-form-title p-b-41">
+                    Inicio Sesión
+                </span>
+                <div class="login100-form validate-form p-b-33 p-t-5">
+
+                    <div class="wrap-input100 validate-input" data-validate="Ingrese un correo">
+                        <input class="input100" type="email" name="username" placeholder="Correo" id="txtCorreo">
+                        <span class="focus-input100" data-placeholder="&#xe82a;"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Ingrese una credencial">
+                        <input class="input100" type="password" name="pass" placeholder="Credencial" id="txtCredencial">
+                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn m-t-32">
+                        <button class="btn btn-blue btn-lg" id="btnIniciar">
+                            Iniciar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/admin-login")
+</body>
+</html>
+

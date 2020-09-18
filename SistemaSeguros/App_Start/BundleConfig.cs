@@ -20,11 +20,32 @@ namespace SistemaSeguros
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js"
+                      , "~/Content/sweetalert/sweetalert.min.js"
+                      , "~/Scripts/jquery.dataTables.min.js",
+                      "~/Scripts/dataTables.bootstrap.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css"
+                      , "~/Content/dataTables.bootstrap.min.css"));
+
+            bundles.Add(new StyleBundle("~/Content/login").Include(
+                     "~/Content/util.css",
+                     "~/Content/main.css"));
+
+            bundles.Add(new StyleBundle("~/Content/fuentes").Include(
+                    "~/fonts/font-awesome-4.7.0/font-awesome.css",
+                    "~/fonts/Linearicons-Free-v1.0.0/icon-font.min.css"));
+
+
+            //script personalizados
+            bundles.Add(new ScriptBundle("~/bundles/admin-login").Include("~/Scripts/CuentaUsuario/Login.js"));
+            bundles.Add(new ScriptBundle("~/bundles/admin-usuarios").Include("~/Scripts/CuentaUsuario/Usuarios.js"));
+            bundles.Add(new ScriptBundle("~/bundles/admin-clientes").Include("~/Scripts/CuentaUsuario/Clientes.js"));
+            bundles.Add(new ScriptBundle("~/bundles/admin-tipoRiesgo").Include("~/Scripts/Catalogo/TipoRiesgo.js"));
+
+
         }
     }
 }

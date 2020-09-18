@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-12 mb-3">
+    <h4 class="text-gray-color m-0"> Nuevo Usuario </h4>
+</div>
+<hr />
+<div class="col-12 p-2">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <p for="">Identificación:</p>
+                <input type="text" placeholder="0" id="txtIdentificacion" name="txtIdentificacion" class="form-control" maxlength="20">
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <p for="">Nombre Usuario:</p>
+                <input type="text" placeholder="0" id="txtNombre" name="txtNombre" class="form-control" maxlength="50">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <p for="">Correo:</p>
+                <input type="text" placeholder="0" id="txtCorreo" name="txtCorreo" class="form-control"  maxlength="50">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <p for="">Contraseña:</p>
+                <input type="password" placeholder="0" id="txtContrasennia" name="txtContrasennia" class="form-control"  maxlength="50">
+            </div>
+        </div>
+
+        <div class="col-12 pt-4 text-center">
+            <button class="button btn-success btn-lg" id="btnGuardar">
+                Guardar datos
+            </button>
+            <button class="button btn-success btn-lg" id="btnActualizar">
+                Actualizar datos
+            </button>
+            <button class="button btn-success btn-lg" id="btnLimpiar">
+                Limpiar Campos
+            </button>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-bordered table-striped" id="tblUsuarios">
+                <thead>
+                    <tr>
+                        <th scope="col">Identificación</th>
+                        <th scope="col">Nombre Usuario</th>
+                        <th scope="col">Correo Usuario</th>
+                        <th scope="col">Contrasennia</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+ 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/admin-usuarios")
