@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[TipoRiesgo]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Descripcion] VARCHAR(100) NOT NULL
+)
