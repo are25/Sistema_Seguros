@@ -32,29 +32,29 @@ namespace SistemaSeguros.Controllers
 
         public ActionResult Usuarios()
         {
-            return View();
+           return ValidarPantalla();
         }
 
         public ActionResult Clientes()
         {
-            return View();
+            return ValidarPantalla();
         }
 
         public ActionResult Riesgo()
         {
-            return View();
+            return ValidarPantalla();
         }
 
         public ActionResult Cubrimiento()
         {
-            return View();
+            return ValidarPantalla();
         }
 
         public ActionResult Poliza()
         {
             ViewBag.Message = "Póliza de seguros.";
 
-            return View();
+            return ValidarPantalla();
         }
 
         public ActionResult Cerrar()
@@ -65,7 +65,7 @@ namespace SistemaSeguros.Controllers
 
         public ActionResult ManejoPoliza()
         {
-            return View();
+            return ValidarPantalla();
         }
 
         public JsonResult CrearCookie(string Usuario)
@@ -75,6 +75,22 @@ namespace SistemaSeguros.Controllers
             {
                 datosCliente = true,
             }, JsonRequestBehavior.AllowGet);
+
+        }
+
+        private ActionResult ValidarPantalla()
+        {
+
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (authCookie == null)
+            {
+                return View("Login");
+            }
+            else
+            {
+                return View();
+
+            }
 
         }
     }
