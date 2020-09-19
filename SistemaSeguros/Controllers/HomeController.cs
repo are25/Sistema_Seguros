@@ -12,9 +12,16 @@ namespace SistemaSeguros.Controllers
         public ActionResult Index(string Usuario)
         {
             HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
-            ViewBag.Usuario = ticket.Name;
-            return View();
+            if (authCookie == null)
+            {
+                return View("Login");
+            }
+            else{
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+                ViewBag.Usuario = ticket.Name;
+                return View();
+            }
+            
         }
 
         public ActionResult Login()
@@ -38,6 +45,10 @@ namespace SistemaSeguros.Controllers
             return View();
         }
 
+        public ActionResult Cubrimiento()
+        {
+            return View();
+        }
 
         public ActionResult Poliza()
         {

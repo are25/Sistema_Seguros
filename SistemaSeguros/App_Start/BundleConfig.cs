@@ -26,7 +26,9 @@ namespace SistemaSeguros
                       "~/Scripts/dataTables.bootstrap.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                     "~/Content/bootstrap-lumen.css",
+                      "~/Content/bootstrap-datetimepicker.css",
+                      "~/Content/FontAwesome/css/fontawesome-all.min.css",
                       "~/Content/site.css"
                       , "~/Content/dataTables.bootstrap.min.css"));
 
@@ -44,6 +46,7 @@ namespace SistemaSeguros
             bundles.Add(new ScriptBundle("~/bundles/admin-usuarios").Include("~/Scripts/CuentaUsuario/Usuarios.js"));
             bundles.Add(new ScriptBundle("~/bundles/admin-clientes").Include("~/Scripts/CuentaUsuario/Clientes.js"));
             bundles.Add(new ScriptBundle("~/bundles/admin-tipoRiesgo").Include("~/Scripts/Catalogo/TipoRiesgo.js"));
+            bundles.Add(new ScriptBundle("~/bundles/admin-cubrimiento").Include("~/Scripts/Catalogo/Cubrimiento.js"));
 
 
         }

@@ -11,10 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaSeguros.EX", "Sistem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaSeguros.ET", "SistemaSeguros.ET\SistemaSeguros.ET.csproj", "{6D84F959-C729-492E-A743-2911926AC648}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaSeguros.BL", "SistemaSeguros.BL\SistemaSeguros.BL.csproj", "{1F0488AD-C974-428A-B499-6E281997ED1D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaSeguros.DS", "SistemaSeguros.DS\SistemaSeguros.DS.csproj", "{915C0762-AC56-4424-A9FC-C059A3758385}"
-EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SistemaSeguros.BD", "SistemaSeguros.BD\SistemaSeguros.BD.sqlproj", "{3DCA86A1-1A6A-4E97-8855-E47CF758C916}"
 EndProject
 Global
@@ -39,14 +35,6 @@ Global
 		{6D84F959-C729-492E-A743-2911926AC648}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D84F959-C729-492E-A743-2911926AC648}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D84F959-C729-492E-A743-2911926AC648}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F0488AD-C974-428A-B499-6E281997ED1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F0488AD-C974-428A-B499-6E281997ED1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F0488AD-C974-428A-B499-6E281997ED1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F0488AD-C974-428A-B499-6E281997ED1D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{915C0762-AC56-4424-A9FC-C059A3758385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{915C0762-AC56-4424-A9FC-C059A3758385}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{915C0762-AC56-4424-A9FC-C059A3758385}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{915C0762-AC56-4424-A9FC-C059A3758385}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3DCA86A1-1A6A-4E97-8855-E47CF758C916}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3DCA86A1-1A6A-4E97-8855-E47CF758C916}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DCA86A1-1A6A-4E97-8855-E47CF758C916}.Debug|Any CPU.Deploy.0 = Debug|Any CPU

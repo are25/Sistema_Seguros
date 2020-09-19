@@ -255,8 +255,8 @@ function CargarTabla() {
             }, {
                 "data": null,
                 "render": function (data, type, row, meta) {
-                    var btn = '<a class="table-btn-edit" id="idEditar" href="#" onclick="javaScript:Carga(\'' + data.Identificacion + '\',\'' + data.NombreUsuario + '\',\'' + data.CorreoUsuario + '\',\'' + data.Contrasennia + '\')"><span title="Editar Usuario" class="fas fa-edit">Editar</span></a>';
-                    btn = btn + '           <a class="table-btn-delete" id="idEliminar" href="#" onclick="javaScript:Eliminar(\'' + data.Identificacion + '\')"><span title="Eliminar" class="fas fa-trash-alt">Eliminar</span></a>';
+                    var btn = '<a class="btn btn-warning" id="idEditar" href="#" onclick="javaScript:Carga(\'' + data.Identificacion + '\',\'' + data.NombreUsuario + '\',\'' + data.CorreoUsuario + '\',\'' + data.Contrasennia + '\')"><span title="Editar Usuario" class="fas fa-edit"></span></a>';
+                    btn = btn + '           <a class="btn btn-danger" id="idEliminar" href="#" onclick="javaScript:Eliminar(\'' + data.Identificacion + '\')"><span title="Eliminar" class="fas fa-trash-alt"></span></a>';
 
                     return btn;
                 }

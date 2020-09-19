@@ -139,11 +139,25 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-lumen.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dataTables.bootstrap.min.css" />
+    <Content Include="Content\FontAwesome\css\fa-brands.css" />
+    <Content Include="Content\FontAwesome\css\fa-brands.min.css" />
+    <Content Include="Content\FontAwesome\css\fa-regular.css" />
+    <Content Include="Content\FontAwesome\css\fa-regular.min.css" />
+    <Content Include="Content\FontAwesome\css\fa-solid.css" />
+    <Content Include="Content\FontAwesome\css\fa-solid.min.css" />
+    <Content Include="Content\FontAwesome\css\fontawesome-all.css" />
+    <Content Include="Content\FontAwesome\css\fontawesome-all.min.css" />
+    <Content Include="Content\FontAwesome\css\fontawesome.css" />
+    <Content Include="Content\FontAwesome\css\fontawesome.min.css" />
+    <Content Include="Content\FontAwesome\webfonts\fa-brands-400.svg" />
+    <Content Include="Content\FontAwesome\webfonts\fa-regular-400.svg" />
+    <Content Include="Content\FontAwesome\webfonts\fa-solid-900.svg" />
     <Content Include="Content\images\bg-01.jpg" />
     <Content Include="Content\images\inicio.jpg" />
     <Content Include="Content\main.css" />
@@ -243,7 +257,20 @@
     <Content Include="fonts\ubuntu\Ubuntu-Medium.ttf" />
     <Content Include="fonts\ubuntu\Ubuntu-MediumItalic.ttf" />
     <Content Include="fonts\ubuntu\Ubuntu-Regular.ttf" />
+    <Content Include="Content\FontAwesome\webfonts\fa-brands-400.eot" />
+    <Content Include="Content\FontAwesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="Content\FontAwesome\webfonts\fa-brands-400.woff" />
+    <Content Include="Content\FontAwesome\webfonts\fa-brands-400.woff2" />
+    <Content Include="Content\FontAwesome\webfonts\fa-regular-400.eot" />
+    <Content Include="Content\FontAwesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="Content\FontAwesome\webfonts\fa-regular-400.woff" />
+    <Content Include="Content\FontAwesome\webfonts\fa-regular-400.woff2" />
+    <Content Include="Content\FontAwesome\webfonts\fa-solid-900.eot" />
+    <Content Include="Content\FontAwesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="Content\FontAwesome\webfonts\fa-solid-900.woff" />
+    <Content Include="Content\FontAwesome\webfonts\fa-solid-900.woff2" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Catalogo\Cubrimiento.js" />
     <Content Include="Scripts\Catalogo\TipoRiesgo.js" />
     <Content Include="Scripts\CuentaUsuario\Clientes.js" />
     <Content Include="Scripts\CuentaUsuario\Login.js" />
@@ -277,6 +304,8 @@
     <Content Include="Views\Home\Usuarios.cshtml" />
     <Content Include="Views\Home\Clientes.cshtml" />
     <Content Include="Views\Home\Riesgo.cshtml" />
+    <Content Include="Views\Home\Cubrimiento.cshtml" />
+    <Content Include="Views\Home\Poliza.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

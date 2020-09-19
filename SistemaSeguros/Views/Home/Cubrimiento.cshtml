@@ -1,11 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "Riesgo";
+    ViewBag.Title = "Cubrimiento";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
- 
+
+
 <div class="col-12 mb-3">
-    <h4 class="text-gray-color m-0"> Nuevo Tipo de Riesgo </h4>
+    <h4 class="text-gray-color m-0"> Nuevo Tipo de Cubrimiento </h4>
 </div>
 <hr />
 <div class="col-12 p-2">
@@ -23,10 +24,10 @@
                 <input type="text" placeholder="0" id="txtId" name="txtId" class="form-control" maxlength="50">
             </div>
         </div>
-       
+
 
         <div class="col-12 pt-4 text-center">
-            <button class="btn btn-primary agregarRegistrobtn-lg" id="btnGuardar">
+            <button class="btn btn-primary agregarRegistro btn-lg" id="btnGuardar">
                 Guardar datos
             </button>
             <button class="btn btn-primary agregarRegistro btn-lg" id="btnActualizar">
@@ -40,10 +41,10 @@
     <hr />
     <div class="row">
         <div class="col-sm-12">
-            <table class="table table-hover table-striped table-bordered tablaApp dataTable no-footer" id="tblTipoRiesgo">
+            <table class="table table-hover table-striped table-bordered tablaApp dataTable no-footer" id="tblTipoCubrimiento">
                 <thead>
                     <tr>
-                        <th scope="col">Id Tipo Riesgo</th>
+                        <th scope="col">Id Tipo Cubrimiento</th>
                         <th scope="col">Descripción</th>
                         <th>Acciones</th>
                     </tr>
@@ -57,5 +58,7 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 @Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/admin-tipoRiesgo")
+@Scripts.Render("~/bundles/admin-cubrimiento")
+
+
 
