@@ -1,7 +1,7 @@
 ﻿var UrlAPI = 'https://localhost:44301/api';
 var idEditar = '#idEditar';
 var txtNombre = '#txtDescripcion';
- 
+
 var txtId = '#txtId';
 var btnLimpiar = '#btnLimpiar';
 var btnGuardar = '#btnGuardar';
@@ -21,7 +21,8 @@ $(document).ready(function () {
     $(btnActualizar).hide();
     $(btnGuardar).on('click', function () {
         //ingresar
-        var TipoRiesgo = { Id: 0, Descripcion: $(txtNombre).val() };
+        if ($(txtNombre).val() != "") {
+            var TipoRiesgo = { Id: 0, Descripcion: $(txtNombre).val() };
             $.ajax({
                 type: "PUT",
                 data: JSON.stringify(TipoRiesgo),
@@ -67,20 +68,33 @@ $(document).ready(function () {
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 swal({
                     title: 'Sistema de Seguros',
-                    text: jqXHR.responseText || textStatus,
+                     text: "No se pudo realizar la acción",
                     type: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33'
                 })
             });
-        
+
+
+        } else {
+            swal({
+                title: 'Sistema de Seguros',
+                text: "Debe ingresar la información solicitada",
+                type: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33'
+            })
+        }
 
 
     });
     $(btnActualizar).on('click', function () {
         //Actualizar
-        var TipoRiesgo = { Id: $(txtId).val(), Descripcion: $(txtNombre).val() };
+        if ($(txtNombre).val() != "") {
+
+            var TipoRiesgo = { Id: $(txtId).val(), Descripcion: $(txtNombre).val() };
             $.ajax({
                 type: "PATCH",
                 data: JSON.stringify(TipoRiesgo),
@@ -113,16 +127,26 @@ $(document).ready(function () {
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 swal({
                     title: 'Sistema de Seguros',
-                    text: jqXHR.responseText || textStatus,
+                     text: "No se pudo realizar la acción",
                     type: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33'
                 })
             });
-        
 
+        } else {
+            swal({
+                title: 'Sistema de Seguros',
+                text: "Debe ingresar la información solicitada",
+                type: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+
+            });
+                }
     });
+
 
     $(btnLimpiar).on('click', function () {
         LimpiarCampos();
@@ -134,7 +158,7 @@ $(document).ready(function () {
 });
 function Carga(id, Descripcion) {
     $(txtNombre).val(Descripcion);
- 
+
     $(txtId).val(id);
     $(txtId).attr("ReadOnly", true);
 
@@ -154,7 +178,7 @@ function Eliminar(Id) {
         .then((willDelete) => {
             if (willDelete) {
                 //Quitar TipoRiesgo
-                var TipoRiesgo = { Id: Id, Descripcion: $(txtNombre).val()};
+                var TipoRiesgo = { Id: Id, Descripcion: $(txtNombre).val() };
 
                 $.ajax({
                     type: "DELETE",
@@ -188,7 +212,7 @@ function Eliminar(Id) {
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     swal({
                         title: 'Sistema de Seguros',
-                        text: jqXHR.responseText || textStatus,
+                         text: "No se pudo realizar la acción",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',

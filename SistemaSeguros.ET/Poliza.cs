@@ -9,6 +9,12 @@ namespace SistemaSeguros.API.Models
     [Table("Poliza")]
     public partial class Poliza
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Poliza()
+        {
+            PolizaPorCliente = new HashSet<PolizaPorCliente>();
+        }
+
         public int Id { get; set; }
 
         [Required]
@@ -34,6 +40,9 @@ namespace SistemaSeguros.API.Models
         public decimal PrecioPoliza { get; set; }
 
         public int? IdTipoRiesgo { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PolizaPorCliente> PolizaPorCliente { get; set; }
 
         public virtual TipoCubrimiento TipoCubrimiento { get; set; }
 

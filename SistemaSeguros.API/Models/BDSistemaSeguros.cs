@@ -2,6 +2,7 @@ namespace SistemaSeguros.API.Models
 {
     using System;
     using System.Data.Entity;
+  
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
@@ -38,6 +39,12 @@ namespace SistemaSeguros.API.Models
                 .Property(e => e.TelefonoContacto)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<Clientes>()
+                .HasMany(e => e.PolizaPorCliente)
+                .WithRequired(e => e.Clientes)
+                .HasForeignKey(e => e.IdCliente)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<EstadosPoliza>()
                 .Property(e => e.Descripcion)
                 .IsUnicode(false);
@@ -55,6 +62,12 @@ namespace SistemaSeguros.API.Models
             modelBuilder.Entity<Poliza>()
                 .Property(e => e.Descripcion)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Poliza>()
+                .HasMany(e => e.PolizaPorCliente)
+                .WithRequired(e => e.Poliza)
+                .HasForeignKey(e => e.IdPoliza)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<PolizaPorCliente>()
                 .Property(e => e.IdCliente)

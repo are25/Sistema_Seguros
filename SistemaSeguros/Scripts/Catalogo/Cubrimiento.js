@@ -21,107 +21,128 @@ $(document).ready(function () {
     $(btnActualizar).hide();
     $(btnGuardar).on('click', function () {
         //ingresar
-        var TipoCubrimiento = { Id: 0, Descripcion: $(txtNombre).val() };
-        $.ajax({
-            type: "PUT",
-            data: JSON.stringify(TipoCubrimiento),
-            url: UrlAPI + "/TipoCubrimiento/RegistroTipoCubrimiento"
-        }).done(function (data) {
-            if (data == "1") {
-                swal({
-                    title: 'Sistema de Seguros',
-                    text: "Tipo Cubrimiento agregado con éxito.",
-                    type: 'error',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33'
-                });
+        if ($(txtNombre).val() != "") {
+            var TipoCubrimiento = { Id: 0, Descripcion: $(txtNombre).val() };
+            $.ajax({
+                type: "PUT",
+                data: JSON.stringify(TipoCubrimiento),
+                url: UrlAPI + "/TipoCubrimiento/RegistroTipoCubrimiento"
+            }).done(function (data) {
+                if (data == "1") {
+                    swal({
+                        title: 'Sistema de Seguros',
+                        text: "Tipo Cubrimiento agregado con éxito.",
+                        type: 'error',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33'
+                    });
 
-                LimpiarCampos();
-                $("#tblTipoCubrimiento").dataTable().fnDestroy();
-                CargarTabla();
-            } else if (data == "2") {
-                swal({
-                    title: 'Sistema de Seguros',
-                    text: "Tipo Cubrimiento existente.",
-                    type: 'error',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33'
-                });
+                    LimpiarCampos();
+                    $("#tblTipoCubrimiento").dataTable().fnDestroy();
+                    CargarTabla();
+                } else if (data == "2") {
+                    swal({
+                        title: 'Sistema de Seguros',
+                        text: "Tipo Cubrimiento existente.",
+                        type: 'error',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33'
+                    });
 
-                LimpiarCampos();
-                $("#tblTipoCubrimiento").dataTable().fnDestroy();
-                CargarTabla();
-            }
-            else {
+                    LimpiarCampos();
+                    $("#tblTipoCubrimiento").dataTable().fnDestroy();
+                    CargarTabla();
+                }
+                else {
+                    swal({
+                        title: 'Sistema de Seguros',
+                        text: "No se pudo guardar el Tipo Cubrimiento.",
+                        type: 'error',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33'
+                    });
+                }
+            }).fail(function (jqXHR, textStatus, errorThrown) {
                 swal({
                     title: 'Sistema de Seguros',
-                    text: "No se pudo guardar el Tipo Cubrimiento.",
+                     text: "No se pudo realizar la acción",
                     type: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33'
-                });
-            }
-        }).fail(function (jqXHR, textStatus, errorThrown) {
+                })
+            });
+        } else {
             swal({
                 title: 'Sistema de Seguros',
-                text: jqXHR.responseText || textStatus,
+                text: "Ingrese la información solicitada",
                 type: 'error',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33'
             })
-        });
+        }
+
 
 
 
     });
     $(btnActualizar).on('click', function () {
         //Actualizar
-        var TipoCubrimiento = { Id: $(txtId).val(), Descripcion: $(txtNombre).val() };
-        $.ajax({
-            type: "PATCH",
-            data: JSON.stringify(TipoCubrimiento),
-            url: UrlAPI + "/TipoCubrimiento/EditarTipoCubrimiento"
-        }).done(function (data) {
-            if (data == "1") {
-                swal({
-                    title: 'Sistema de Seguros',
-                    text: "Tipo Cubrimiento actualizado con éxito.",
-                    type: 'error',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33'
-                });
+        if ($(txtNombre).val() != "") {
+            var TipoCubrimiento = { Id: $(txtId).val(), Descripcion: $(txtNombre).val() };
+            $.ajax({
+                type: "PATCH",
+                data: JSON.stringify(TipoCubrimiento),
+                url: UrlAPI + "/TipoCubrimiento/EditarTipoCubrimiento"
+            }).done(function (data) {
+                if (data == "1") {
+                    swal({
+                        title: 'Sistema de Seguros',
+                        text: "Tipo Cubrimiento actualizado con éxito.",
+                        type: 'error',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33'
+                    });
 
-                LimpiarCampos();
-                $("#tblTipoCubrimiento").dataTable().fnDestroy();
-                CargarTabla();
-            }
-            else {
+                    LimpiarCampos();
+                    $("#tblTipoCubrimiento").dataTable().fnDestroy();
+                    CargarTabla();
+                }
+                else {
+                    swal({
+                        title: 'Sistema de Seguros',
+                        text: "No se pudo actualizar el Tipo Cubrimiento.",
+                        type: 'error',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33'
+                    });
+                }
+            }).fail(function (jqXHR, textStatus, errorThrown) {
                 swal({
                     title: 'Sistema de Seguros',
-                    text: "No se pudo actualizar el Tipo Cubrimiento.",
+                     text: "No se pudo realizar la acción",
                     type: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33'
-                });
-            }
-        }).fail(function (jqXHR, textStatus, errorThrown) {
+                })
+            });
+        } else {
             swal({
                 title: 'Sistema de Seguros',
-                text: jqXHR.responseText || textStatus,
+                text: "Ingrese la información solicitada",
                 type: 'error',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33'
             })
-        });
-
-
+        }
     });
 
     $(btnLimpiar).on('click', function () {
@@ -188,7 +209,7 @@ function Eliminar(Id) {
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     swal({
                         title: 'Sistema de Seguros',
-                        text: jqXHR.responseText || textStatus,
+                         text: "No se pudo realizar la acción",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',

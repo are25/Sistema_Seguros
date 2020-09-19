@@ -1,30 +1,20 @@
 ﻿var UrlAPI = 'https://localhost:44301/api';
 var idEditar = '#idEditar';
-var txtDescripcion = '#txtDescripcion';
-var txtNombre = '#txtNombre';
-var txtVigenciaI = '#txtVigenciaI';
 var txtId = '#txtId';
-var cboRiesgo = '#cboRiesgo';
-var txtCobertura = '#txtCobertura';
-var txtPeriodo = '#txtPeriodo';
-var txtPrecio = '#txtPrecio';
-
-var cboCubrimiento = '#cboCubrimiento';
+var cboCliente = '#cboCliente';
+var cboEstado = '#cboEstado';
+var cboPoliza = '#cboPoliza';
 var btnLimpiar = '#btnLimpiar';
 var btnGuardar = '#btnGuardar';
 var btnActualizar = '#btnActualizar';
 
 function LimpiarCampos() {
-    $(txtNombre).val('');
-    $(txtDescripcion).val('');
 
-    $(txtVigenciaI).val('');
     $(txtId).val('');
-    $(cboRiesgo).val(0).change();
-    $(cboCubrimiento).val(0).change();
-    $(txtCobertura).val('');
-    $(txtPeriodo).val('');
-    $(txtPrecio).val('');
+    $(cboCliente).val(0).change()
+    $(cboEstado).val(1).change();
+    $(cboPoliza).val(0).change()
+    $(cboEstado).prop('disabled', true);
     $(btnGuardar).show()
     $(btnActualizar).hide();
 }
@@ -32,27 +22,20 @@ function LimpiarCampos() {
 $(document).ready(function () {
     $(btnActualizar).hide();
     $(btnGuardar).on('click', function () {
-        if ($(txtNombre).val() != ""
-            && $(txtCobertura).val() != ""
-            && $(txtPeriodo).val() != ""
-            && $(cboRiesgo).val() != ""
-            && $(cboCubrimiento).val() != ""
-            && $(txtVigenciaI).val() != ""
-            && $(txtDescripcion).val() != ""
-            && $(txtPrecio).val() != "") {
-            //ingresar
-            var fecha = moment($(txtVigenciaI).val()).format('YYYY-MM-DDTHH:mm:ss');
-
-            var Polizas = { Id: 0, Nombre: $(txtNombre).val(), CoberturaPoliza: $(txtCobertura).val(), PeriodoCobertura: $(txtPeriodo).val(), IdTipoRiesgo: $(cboRiesgo).val(), IdTipoCubrimiento: $(cboCubrimiento).val(), InicioVigencia: fecha, Descripcion: $(txtDescripcion).val(), PrecioPoliza: $(txtPrecio).val() };
+        //ingresar
+        if ($(cboPoliza).val() != "0"
+            && $(cboCliente).val() != "0"
+            && $(cboEstado).val() != "0") {
+            var PolizaPorCliente = { Id: 0, IdPoliza: $(cboPoliza).val(), IdCliente: $(cboCliente).val(), IdEstado: $(cboEstado).val() };
             $.ajax({
                 type: "PUT",
-                data: JSON.stringify(Polizas),
-                url: UrlAPI + "/Polizas/RegistroPolizas"
+                data: JSON.stringify(PolizaPorCliente),
+                url: UrlAPI + "/Gestiones/RegistroPolizaCliente"
             }).done(function (data) {
                 if (data == "1") {
                     swal({
                         title: 'Sistema de Seguros',
-                        text: "Póliza agregado con éxito.",
+                        text: "Póliza Asignada con éxito.",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -60,26 +43,13 @@ $(document).ready(function () {
                     });
 
                     LimpiarCampos();
-                    $("#tblPolizas").dataTable().fnDestroy();
-                    CargarTabla();
-                } else if (data == "2") {
-                    swal({
-                        title: 'Sistema de Seguros',
-                        text: "La % de cubrimiento no puede ser mayor a 50, debido al riesgo alto.!",
-                        type: 'error',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33'
-                    });
-
-                    LimpiarCampos();
-                    $("#tblPolizas").dataTable().fnDestroy();
+                    $("#tblGestionPolizas").dataTable().fnDestroy();
                     CargarTabla();
                 }
                 else {
                     swal({
                         title: 'Sistema de Seguros',
-                        text: "No se pudo guardar la póliza.",
+                        text: "No se pudo guardar la póliza para el cliente.",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -89,42 +59,35 @@ $(document).ready(function () {
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 swal({
                     title: 'Sistema de Seguros',
-                     text: "No se pudo realizar la acción",
+                    text: "No se pudo realizar la acción",
                     type: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33'
                 })
             });
+
         } else {
             swal({
                 title: 'Sistema de Seguros',
-                text: "Debe ingresar la información solicitada",
+                text: "Debe elegir la información que se solicita.",
                 type: 'error',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33'
             })
-
         }
     });
-
     $(btnActualizar).on('click', function () {
-        if ($(txtNombre).val() != ""
-            && $(txtCobertura).val() != ""
-            && $(txtPeriodo).val() != ""
-            && $(cboRiesgo).val() != "0"
-            && $(cboCubrimiento).val() != "0"
-            && $(txtVigenciaI).val() != ""
-            && $(txtDescripcion).val() != ""
-            && $(txtPrecio).val() != "") {
-            //Actualizar
-            var fecha = moment($(txtVigenciaI).val()).format('YYYY-MM-DDTHH:mm:ss');
-            var Polizas = { Id: $(txtId).val(), Nombre: $(txtNombre).val(), CoberturaPoliza: $(txtCobertura).val(), PeriodoCobertura: $(txtPeriodo).val(), IdTipoRiesgo: $(cboRiesgo).val(), IdTipoCubrimiento: $(cboCubrimiento).val(), InicioVigencia: fecha, Descripcion: $(txtDescripcion).val(), PrecioPoliza: $(txtPrecio).val() };
+        //Actualizar
+        if ($(cboPoliza).val() != "0"
+            && $(cboCliente).val() != "0"
+            && $(cboEstado).val() != "0") {
+            var PolizaPorCliente = { Id: $(txtId).val(), IdPoliza: $(cboPoliza).val(), IdCliente: $(cboCliente).val(), IdEstado: $(cboEstado).val() };
             $.ajax({
                 type: "PATCH",
-                data: JSON.stringify(Polizas),
-                url: UrlAPI + "/Polizas/EditarPolizas"
+                data: JSON.stringify(PolizaPorCliente),
+                url: UrlAPI + "/Gestiones/EditarPoliza"
             }).done(function (data) {
                 if (data == "1") {
                     swal({
@@ -137,7 +100,7 @@ $(document).ready(function () {
                     });
 
                     LimpiarCampos();
-                    $("#tblPolizas").dataTable().fnDestroy();
+                    $("#tblGestionPolizas").dataTable().fnDestroy();
                     CargarTabla();
                 }
                 else if (data == "2") {
@@ -151,7 +114,7 @@ $(document).ready(function () {
                     });
 
                     LimpiarCampos();
-                    $("#tblPolizas").dataTable().fnDestroy();
+                    $("#tblGestionPolizas").dataTable().fnDestroy();
                     CargarTabla();
                 }
                 else {
@@ -167,7 +130,7 @@ $(document).ready(function () {
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 swal({
                     title: 'Sistema de Seguros',
-                     text: "No se pudo realizar la acción",
+                    text: "No se pudo realizar la acción",
                     type: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -177,42 +140,34 @@ $(document).ready(function () {
         } else {
             swal({
                 title: 'Sistema de Seguros',
-                text: "Debe ingresar la información solicitada",
+                text: "Debe elegir la información que se solicita.",
                 type: 'error',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33'
             })
-
         }
 
     });
+
     $(btnLimpiar).on('click', function () {
         LimpiarCampos();
     });
 
-    $(txtVigenciaI).datepicker({
-        format: 'YYYY/MM/DD'
-    });
     CargarTabla();
     CargarCatalogos();
 
 });
 
-function Carga(id, Nombre, Descripcion, CoberturaPoliza, InicioVigente, PeriodoCobertura, PrecioPoliza, TipoRiesgoId, TipoCubrimientoId) {
-    $(txtNombre).val(Nombre);
-    $(txtCobertura).val(CoberturaPoliza);
-    $(txtPeriodo).val(PeriodoCobertura);
-    $(txtPrecio).val(PrecioPoliza);
-    $(cboRiesgo).val(TipoRiesgoId).change();
-    $(cboCubrimiento).val(TipoCubrimientoId).change();
-    $(txtVigenciaI).val(InicioVigente);
-    $(txtDescripcion).val(Descripcion);
+function Carga(id, idPoliza, idCliente, idEstado) {
+
+    $(cboEstado).val(idEstado).change();
+    $(cboCliente).val(idCliente).change();
+    $(cboPoliza).val(idPoliza).change();
+
     $(txtId).val(id);
     $(txtId).attr("ReadOnly", true);
-    $(txtVigenciaI).datepicker({
-        format: 'YYYY/MM/DD'
-    });
+    $(cboEstado).prop('disabled', false);
     $(btnActualizar).show()
     $(btnGuardar).hide();
 
@@ -229,12 +184,12 @@ function Eliminar(Id) {
         .then((willDelete) => {
             if (willDelete) {
                 //Quitar Polizas
-                var Polizas = { Id: Id, Descripcion: $(txtNombre).val() };
+                var Polizas = { Id: Id };
 
                 $.ajax({
                     type: "DELETE",
                     data: JSON.stringify(Polizas),
-                    url: UrlAPI + "/Polizas/EliminarPolizas"
+                    url: UrlAPI + "/Gestiones/EliminarPoliza"
                 }).done(function (data) {
                     if (data == "1") {
                         swal({
@@ -247,7 +202,7 @@ function Eliminar(Id) {
                         });
 
                         LimpiarCampos();
-                        $("#tblPolizas").dataTable().fnDestroy();
+                        $("#tblGestionPolizas").dataTable().fnDestroy();
                         CargarTabla();
                     }
                     else {
@@ -263,7 +218,7 @@ function Eliminar(Id) {
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     swal({
                         title: 'Sistema de Seguros',
-                         text: "No se pudo realizar la acción",
+                        text: "No se pudo realizar la acción",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -275,95 +230,80 @@ function Eliminar(Id) {
 }
 
 function CargarCatalogos() {
-    //Riesgo
+    //Estados
     $.ajax({
         type: "GET",
-        url: UrlAPI + "/TipoRiesgo/CargarTipoRiesgo",
+        url: UrlAPI + "/Estados/CargarEstados",
         success: function (data) {
-            $(cboRiesgo).empty();
-            $(cboRiesgo).append($("<option/>").val(0).text("Seleccione"));
+            $(cboEstado).empty();
 
             $.each(JSON.parse(data), function (key, value) {
-                $(cboRiesgo).append($("<option/>").val(value.Id).text(value.Descripcion));
+                $(cboEstado).append($("<option/>").val(value.Id).text(value.Descripcion));
             })
         }
     });
-    //Cubrimiento
+    //Polizas
     $.ajax({
         type: "GET",
-        url: UrlAPI + "/TipoCubrimiento/CargarTipoCubrimiento",
+        url: UrlAPI + "/Polizas/CargarPolizas",
         success: function (data) {
-            $(cboCubrimiento).empty();
-            $(cboCubrimiento).append($("<option/>").val(0).text("Seleccione"));
+            $(cboPoliza).empty();
+            $(cboPoliza).append($("<option/>").val(0).text("Seleccione"));
 
             $.each(JSON.parse(data), function (key, value) {
-                $(cboCubrimiento).append($("<option/>").val(value.Id).text(value.Descripcion));
+                $(cboPoliza).append($("<option/>").val(value.Id).text(value.Nombre));
+            })
+        }
+    });
+    //Clientes
+    $.ajax({
+        type: "GET",
+        url: UrlAPI + "/Clientes/CargarClientes",
+        success: function (data) {
+            $(cboCliente).empty();
+            $(cboCliente).append($("<option/>").val(0).text("Seleccione"));
+
+            $.each(JSON.parse(data), function (key, value) {
+                $(cboCliente).append($("<option/>").val(value.IdentificacionCliente).text(value.NombreCliente));
             })
         }
     });
 
-    $(cboRiesgo).val(0);
-    $(cboCubrimiento).val(0);
+
+    $(cboEstado).val(1).change();
+
+    $(cboEstado).prop('disabled', true);
+
+    $(cboPoliza).val(0);
+    $(cboCliente).val(0);
 }
 
 function CargarTabla() {
-    $("#tblPolizas").DataTable({
+    $("#tblGestionPolizas").DataTable({
         ajax: {
-            url: UrlAPI + "/Polizas/CargarPolizas",
+            url: UrlAPI + "/Gestiones/CargarPolizas",
             dataSrc: ""
         },
         columns: [
             {
-                data: "Id"
+                data: "Poliza.Descripcion"
             },
             {
-                data: "Nombre"
+                data: "IdCliente"
             },
 
             {
-                data: "Descripcion"
+                data: "Clientes.NombreCliente"
             },
 
             {
-                data: "CoberturaPoliza"
+                data: "EstadosPoliza.Descripcion"
             },
-
-            {
-                data: "InicioVigencia",
-                render: function (data) {
-                    return moment(data).format('YYYY/MM/DD');
-                }
-
-            },
-            {
-                data: "PeriodoCobertura",
-                render: function (data) {
-                    return data + " meses";
-                }
-            },
-            {
-                data: "FinVigencia", render: function (data) {
-                    return moment(data).format('YYYY/MM/DD');
-                }
-            },
-
-            {
-                data: "PrecioPoliza"
-            },
-
-            {
-                data: "TipoCubrimiento.Descripcion"
-            },
-
-            {
-                data: "TipoRiesgo.Descripcion"
-            },
-
 
             {
                 "data": null,
                 "render": function (data, type, row, meta) {
-                    var btn = '<a class="btn btn-warning" id="idEditar" href="#" onclick="javaScript:Carga(\'' + data.Id + '\',\'' + data.Nombre + '\',\'' + data.Descripcion + '\',\'' + data.CoberturaPoliza + '\',\'' + moment(data.InicioVigencia).format('YYYY/MM/DD') + '\',\'' + data.PeriodoCobertura + '\',\'' + data.PrecioPoliza + '\',\'' + data.TipoRiesgo.Id + '\',\'' + data.TipoCubrimiento.Id + '\')"><span title="Editar Póliza" class="fas fa-edit"></span></a>';
+                    var btn = '<a class="btn btn-warning" id="idEditar" href="#" onclick="javaScript:Carga(\'' + data.Id + '\',\'' + data.Poliza.Id + '\',\'' + data.Clientes.IdentificacionCliente + '\',\'' + data.EstadosPoliza.Id + '\')"><span title="Editar Póliza" class="fas fa-edit"></span></a>';
                     btn = btn + '           <a class="btn btn-danger" id="idEliminar" href="#" onclick="javaScript:Eliminar(\'' + data.Id + '\')"><span title="Eliminar" class="fas fa-trash-alt"></span></a>';
 
                     return btn;

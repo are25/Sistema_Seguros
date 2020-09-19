@@ -8,6 +8,12 @@ namespace SistemaSeguros.API.Models
 
     public partial class Clientes
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Clientes()
+        {
+            PolizaPorCliente = new HashSet<PolizaPorCliente>();
+        }
+
         [Key]
         [StringLength(20)]
         public string IdentificacionCliente { get; set; }
@@ -22,5 +28,8 @@ namespace SistemaSeguros.API.Models
         [Required]
         [StringLength(50)]
         public string TelefonoContacto { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PolizaPorCliente> PolizaPorCliente { get; set; }
     }
 }

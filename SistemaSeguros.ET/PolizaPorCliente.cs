@@ -14,11 +14,15 @@ namespace SistemaSeguros.API.Models
         public int IdPoliza { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(20)]
         public string IdCliente { get; set; }
 
         public int IdEstado { get; set; }
 
+        public virtual Clientes Clientes { get; set; }
+
         public virtual EstadosPoliza EstadosPoliza { get; set; }
+
+        public virtual Poliza Poliza { get; set; }
     }
 }

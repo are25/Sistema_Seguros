@@ -51,6 +51,7 @@ namespace SistemaSeguros
             bundles.Add(new ScriptBundle("~/bundles/admin-tipoRiesgo").Include("~/Scripts/Catalogo/TipoRiesgo.js"));
             bundles.Add(new ScriptBundle("~/bundles/admin-cubrimiento").Include("~/Scripts/Catalogo/Cubrimiento.js"));
             bundles.Add(new ScriptBundle("~/bundles/admin-polizas").Include("~/Scripts/Poliza/Polizas.js"));
+            bundles.Add(new ScriptBundle("~/bundles/admin-ManejoPolizas").Include("~/Scripts/Poliza/Gestiones.js"));
 
 
         }

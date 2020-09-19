@@ -4,5 +4,89 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ManejoPoliza</h2>
+<div class="col-12 mb-3">
+    <h4 class="text-gray-color m-0"> Manejo de Pólizas</h4>
+</div>
+<hr />
+
+<style>
+    th {
+        width: 138px !important;
+    }
+</style>
+ 
+ <div class="col-12 p-2">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <p for="">Nombre Póliza:</p>
+                <select class="form-control" id="cboPoliza">
+                    <option value="">Seleccione</option>
+                </select>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <p for="">Nombre Cliente:</p>
+                <select class="form-control" id="cboCliente">
+                    <option value="">Seleccione</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <p for="">Estado:</p>
+                <select class="form-control" id="cboEstado">
+                 </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3" hidden>
+        <div class="form-group">
+            <p for="">Nombre Cliente:</p>
+            <input type="text" placeholder="0" id="txtId" name="txtId" class="form-control" maxlength="50">
+        </div>
+    </div>
+    <div class="col-12 pt-4 text-center">
+        <button class="btn btn-primary agregarRegistro btn-lg" id="btnGuardar">
+            Guardar datos
+        </button>
+        <button class="btn btn-primary agregarRegistro btn-lg" id="btnActualizar">
+            Actualizar datos
+        </button>
+        <button class="btn btn-success agregarRegistro btn-lg" id="btnLimpiar">
+            Limpiar Campos
+        </button>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-hover table-striped table-bordered tablaApp dataTable no-footer" id="tblGestionPolizas">
+                <thead>
+                    <tr>
+
+
+                        <th scope="col">Póliza</th>
+                        <th scope="col">Cédula Cliente</th>
+                        <th scope="col">Nombre Cliente</th>
+                        <th scope="col">Estado</th>
+
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/admin-ManejoPolizas")
+
+
+
+
 

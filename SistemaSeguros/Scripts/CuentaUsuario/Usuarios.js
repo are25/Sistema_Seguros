@@ -35,64 +35,78 @@ $(document).ready(function () {
     $(btnActualizar).hide();
     $(btnGuardar).on('click', function () {
         //ingresar
-        if (Administracion.validar_email($(txtCorreo).val())) {
-            var usuario = { CorreoUsuario: $(txtCorreo).val(), Contrasennia: $(txtContrasennia).val(), Identificacion: $(txtIdentificacion).val(), NombreUsuario: $(txtNombre).val() };
-            $.ajax({
-                type: "PUT",
-                data: JSON.stringify(usuario),
-                url: UrlAPI + "/CuentaUsuario/RegistroUsuario"
-            }).done(function (data) {
-                if (data == "1") {
-                    swal({
-                        title: 'Sistema de Seguros',
-                        text: "Usuario agregado con éxito.",
-                        type: 'error',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33'
-                    });
+        if ($(txtCorreo).val() != ""
+            && $(txtContrasennia).val() != ""
+            && $(txtIdentificacion).val() != ""
+            && $(txtNombre).val()!="") {
+            if (Administracion.validar_email($(txtCorreo).val())) {
+                var usuario = { CorreoUsuario: $(txtCorreo).val(), Contrasennia: $(txtContrasennia).val(), Identificacion: $(txtIdentificacion).val(), NombreUsuario: $(txtNombre).val() };
+                $.ajax({
+                    type: "PUT",
+                    data: JSON.stringify(usuario),
+                    url: UrlAPI + "/CuentaUsuario/RegistroUsuario"
+                }).done(function (data) {
+                    if (data == "1") {
+                        swal({
+                            title: 'Sistema de Seguros',
+                            text: "Usuario agregado con éxito.",
+                            type: 'error',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33'
+                        });
 
-                    LimpiarCampos();
-                    $("#tblUsuarios").dataTable().fnDestroy();
-                    CargarTabla();
-                } else if (data == "2") {
-                    swal({
-                        title: 'Sistema de Seguros',
-                        text: "Usuario existente.",
-                        type: 'error',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33'
-                    });
+                        LimpiarCampos();
+                        $("#tblUsuarios").dataTable().fnDestroy();
+                        CargarTabla();
+                    } else if (data == "2") {
+                        swal({
+                            title: 'Sistema de Seguros',
+                            text: "Usuario existente.",
+                            type: 'error',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33'
+                        });
 
-                    LimpiarCampos();
-                    $("#tblUsuarios").dataTable().fnDestroy();
-                    CargarTabla();
-                }
-                else {
+                        LimpiarCampos();
+                        $("#tblUsuarios").dataTable().fnDestroy();
+                        CargarTabla();
+                    }
+                    else {
+                        swal({
+                            title: 'Sistema de Seguros',
+                            text: "No se pudo guardar el usuario.",
+                            type: 'error',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33'
+                        });
+                    }
+                }).fail(function (jqXHR, textStatus, errorThrown) {
                     swal({
                         title: 'Sistema de Seguros',
-                        text: "No se pudo guardar el usuario.",
+                         text: "No se pudo realizar la acción",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33'
-                    });
-                }
-            }).fail(function (jqXHR, textStatus, errorThrown) {
+                    })
+                });
+            } else {
                 swal({
                     title: 'Sistema de Seguros',
-                    text: jqXHR.responseText || textStatus,
+                    text: "Correo incorrecto",
                     type: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33'
                 })
-            });
-        } else {
+            }
+        } else{
             swal({
                 title: 'Sistema de Seguros',
-                text: "Correo incorrecto",
+                text: "Debe de ingresar la información solicitada.",
                 type: 'error',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -100,55 +114,70 @@ $(document).ready(function () {
             })
         }
         
+        
 
     });
     $(btnActualizar).on('click', function () {
         //Actualizar
-        if (Administracion.validar_email($(txtCorreo).val())) {
-            var usuario = { CorreoUsuario: $(txtCorreo).val(), Contrasennia: $(txtContrasennia).val(), Identificacion: $(txtIdentificacion).val(), NombreUsuario: $(txtNombre).val() };
-            $.ajax({
-                type: "PATCH",
-                data: JSON.stringify(usuario),
-                url: UrlAPI + "/CuentaUsuario/EditarUsuario"
-            }).done(function (data) {
-                if (data == "1") {
-                    swal({
-                        title: 'Sistema de Seguros',
-                        text: "Usuario actualizado con éxito.",
-                        type: 'error',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33'
-                    });
+        if ($(txtCorreo).val() != ""
+            && $(txtContrasennia).val() != ""
+            && $(txtIdentificacion).val() != ""
+            && $(txtNombre).val() != "") {
+            if (Administracion.validar_email($(txtCorreo).val())) {
+                var usuario = { CorreoUsuario: $(txtCorreo).val(), Contrasennia: $(txtContrasennia).val(), Identificacion: $(txtIdentificacion).val(), NombreUsuario: $(txtNombre).val() };
+                $.ajax({
+                    type: "PATCH",
+                    data: JSON.stringify(usuario),
+                    url: UrlAPI + "/CuentaUsuario/EditarUsuario"
+                }).done(function (data) {
+                    if (data == "1") {
+                        swal({
+                            title: 'Sistema de Seguros',
+                            text: "Usuario actualizado con éxito.",
+                            type: 'error',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33'
+                        });
 
-                    LimpiarCampos();
-                    $("#tblUsuarios").dataTable().fnDestroy();
-                    CargarTabla();
-                }
-                else {
+                        LimpiarCampos();
+                        $("#tblUsuarios").dataTable().fnDestroy();
+                        CargarTabla();
+                    }
+                    else {
+                        swal({
+                            title: 'Sistema de Seguros',
+                            text: "No se pudo actualizar el usuario.",
+                            type: 'error',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33'
+                        });
+                    }
+                }).fail(function (jqXHR, textStatus, errorThrown) {
                     swal({
                         title: 'Sistema de Seguros',
-                        text: "No se pudo actualizar el usuario.",
+                         text: "No se pudo realizar la acción",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33'
-                    });
-                }
-            }).fail(function (jqXHR, textStatus, errorThrown) {
+                    })
+                });
+            } else {
                 swal({
                     title: 'Sistema de Seguros',
-                    text: jqXHR.responseText || textStatus,
+                    text: "Correo incorrecto",
                     type: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33'
                 })
-            });
+            }
         } else {
             swal({
                 title: 'Sistema de Seguros',
-                text: "Correo incorrecto",
+                text: "Debe ingresar la información solicitada",
                 type: 'error',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -223,7 +252,7 @@ function Eliminar(cedula) {
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     swal({
                         title: 'Sistema de Seguros',
-                        text: jqXHR.responseText || textStatus,
+                         text: "No se pudo realizar la acción",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
