@@ -13,7 +13,9 @@ namespace SistemaSeguros.API.Models
         }
 
         public virtual DbSet<Clientes> Clientes { get; set; }
+        public virtual DbSet<EstadosPoliza> EstadosPoliza { get; set; }
         public virtual DbSet<Poliza> Poliza { get; set; }
+        public virtual DbSet<PolizaPorCliente> PolizaPorCliente { get; set; }
         public virtual DbSet<TipoCubrimiento> TipoCubrimiento { get; set; }
         public virtual DbSet<TipoRiesgo> TipoRiesgo { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
@@ -36,12 +38,26 @@ namespace SistemaSeguros.API.Models
                 .Property(e => e.TelefonoContacto)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<EstadosPoliza>()
+                .Property(e => e.Descripcion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EstadosPoliza>()
+                .HasMany(e => e.PolizaPorCliente)
+                .WithRequired(e => e.EstadosPoliza)
+                .HasForeignKey(e => e.IdEstado)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Poliza>()
                 .Property(e => e.Nombre)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Poliza>()
                 .Property(e => e.Descripcion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PolizaPorCliente>()
+                .Property(e => e.IdCliente)
                 .IsUnicode(false);
 
             modelBuilder.Entity<TipoCubrimiento>()
