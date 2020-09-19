@@ -14,4 +14,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="IdentificacionCliente" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="2c3bb85a-0c32-4364-8876-0188860236a2" ChangeDateTime="09/19/2020 00:05:08">
+    <Property Name="ElementName" Value="[dbo].[PolizaPorCliente].[EsCancelada]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PolizaPorCliente]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdEstado" />
+  </Operation>
 </Operations>

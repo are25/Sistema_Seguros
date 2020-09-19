@@ -23,3 +23,7 @@ INSERT INTO TipoCubrimiento (Descripcion) VALUES ('Terremoto')
 	, ('incendio')
 	, ('Robo')
 	, ('Pérdida')
+
+--Inserción Estado Póliza
+INSERT INTO EstadosPoliza (Descripcion) VALUES ('Asignada')
+	, ('Cancelada')
