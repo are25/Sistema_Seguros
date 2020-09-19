@@ -45,78 +45,69 @@ namespace SistemaSeguros.API.Controllers
         }
 
         [HttpGet]
-        public HttpResponseMessage CargarUsuarios()
+        public IEnumerable<Usuarios> CargarUsuarios()
         {
             HttpResponseMessage vloRespuestaApi;
-            List<Usuarios> vloListado;
+            List<Usuarios> vloListado = null;
             try
             {
                 vloListado = ObtenerUsuarios();
-                string vlcRespuesta = JsonConvert.SerializeObject(vloListado);
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
-
+ 
             }
             catch (Exception)
             {
                 vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
-            return vloRespuestaApi;
+            return vloListado;
         }
 
         [HttpPut]
-        public HttpResponseMessage RegistroUsuario()
+        public IHttpActionResult RegistroUsuario(Usuarios usuario)
         {
             string vlcRespuesta = String.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el cliente como JSON
+                vlcRespuesta = IngresoUsuario(usuario);
 
-                vlcRespuesta = IngresoUsuario(vlcDatos);
+                return CreatedAtRoute("DefaultApi", new { id = usuario.Identificacion }, usuario);
 
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
-
-                return vloRespuestaApi;
-            }
+             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
 
         [HttpPatch]
-        public HttpResponseMessage EditarUsuario()
+        public IHttpActionResult EditarUsuario(Usuarios usuario)
         {
             string vlcRespuesta = string.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el cliente como JSON
+ 
+                vlcRespuesta = ActualizarUsuario(usuario);
 
-                vlcRespuesta = ActualizarUsuario(vlcDatos);
-
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
-
-                return vloRespuestaApi;
-            }
+                vloRespuestaApi = Ok(vlcRespuesta);
+             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
 
         [HttpDelete]
-        public HttpResponseMessage EliminarUsuario()
+        public HttpResponseMessage EliminarUsuario(Usuarios usuarios)
         {
             string vlcRespuesta = string.Empty;
             HttpResponseMessage vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el cliente como JSON
-
-                vlcRespuesta = EliminarUsuario(vlcDatos);
+ 
+                vlcRespuesta = Eliminar(usuarios);
 
                 vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
 
@@ -143,12 +134,11 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string IngresoUsuario(string pvcDatos)
+        private string IngresoUsuario(Usuarios vloUsuario)
         {
             try
             {
-                Usuarios vloUsuario = JsonConvert.DeserializeObject<Usuarios>(pvcDatos);
-                if (existeUsuario(vloUsuario.Identificacion))
+                 if (existeUsuario(vloUsuario.Identificacion))
                 {
                     return "2";//existe
                 }
@@ -181,11 +171,10 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string EliminarUsuario(string pvcDatos)
+        private string Eliminar(Usuarios vloUsuario)
         {
             try
             {
-                Usuarios vloUsuario = JsonConvert.DeserializeObject<Usuarios>(pvcDatos);
                 if (existeUsuario(vloUsuario.Identificacion))
                 {
                     Usuarios usuarioEliminar = db.Usuarios.SingleOrDefault(x => x.Identificacion == vloUsuario.Identificacion);
@@ -224,12 +213,11 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string ActualizarUsuario(string pvcDatos)
+        private string ActualizarUsuario(Usuarios vloUsuario)
         {
             try
             {
-                Usuarios vloUsuario = JsonConvert.DeserializeObject<Usuarios>(pvcDatos);
-                if (existeUsuario(vloUsuario.Identificacion))
+                 if (existeUsuario(vloUsuario.Identificacion))
                 {
                     db.Entry(vloUsuario).State = EntityState.Modified;
 

@@ -40,55 +40,32 @@ $(document).ready(function () {
                 var Cliente = { CorreoCliente: $(txtCorreo).val(), TelefonoContacto: $(txtTelefono).val(), IdentificacionCliente: $(txtIdentificacion).val(), NombreCliente: $(txtNombre).val() };
                 $.ajax({
                     type: "PUT",
-                    data: JSON.stringify(Cliente),
+                    data: Cliente,
+                    dataType: "json",
                     url: UrlAPI + "/Clientes/RegistroCliente"
                 }).done(function (data) {
-                    if (data == "1") {
-                        swal({
-                            title: 'Sistema de Seguros',
-                            text: "Cliente agregado con éxito.",
-                            type: 'error',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33'
-                        });
+                    swal({
+                        title: 'Sistema de Seguros',
+                        text: "Cliente agregado con éxito.",
+                        type: 'success',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33'
+                    });
 
-                        LimpiarCampos();
-                        $("#tblClientes").dataTable().fnDestroy();
-                        CargarTabla();
-                    } else if (data == "2") {
-                        swal({
-                            title: 'Sistema de Seguros',
-                            text: "Cliente existente.",
-                            type: 'error',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33'
-                        });
+                    LimpiarCampos();
+                    $("#tblClientes").dataTable().fnDestroy();
+                    CargarTabla();
 
-                        LimpiarCampos();
-                        $("#tblClientes").dataTable().fnDestroy();
-                        CargarTabla();
-                    }
-                    else {
-                        swal({
-                            title: 'Sistema de Seguros',
-                            text: "No se pudo guardar el Cliente.",
-                            type: 'error',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33'
-                        });
-                    }
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     swal({
                         title: 'Sistema de Seguros',
-                         text: "No se pudo realizar la acción",
+                        text: "No se pudo guardar el Cliente.",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33'
-                    })
+                    });
                 });
             } else {
                 swal({
@@ -110,7 +87,7 @@ $(document).ready(function () {
                 cancelButtonColor: '#d33'
             })
         }
-      
+
 
 
     });
@@ -122,42 +99,31 @@ $(document).ready(function () {
                 var Cliente = { CorreoCliente: $(txtCorreo).val(), TelefonoContacto: $(txtTelefono).val(), IdentificacionCliente: $(txtIdentificacion).val(), NombreCliente: $(txtNombre).val() };
                 $.ajax({
                     type: "PATCH",
-                    data: JSON.stringify(Cliente),
+                    data: Cliente,
                     url: UrlAPI + "/Clientes/EditarCliente"
                 }).done(function (data) {
-                    if (data == "1") {
-                        swal({
-                            title: 'Sistema de Seguros',
-                            text: "Cliente actualizado con éxito.",
-                            type: 'error',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33'
-                        });
+                    swal({
+                        title: 'Sistema de Seguros',
+                        text: "Cliente actualizado con éxito.",
+                        type: 'success',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33'
+                    });
 
-                        LimpiarCampos();
-                        $("#tblClientes").dataTable().fnDestroy();
-                        CargarTabla();
-                    }
-                    else {
-                        swal({
-                            title: 'Sistema de Seguros',
-                            text: "No se pudo actualizar el Cliente.",
-                            type: 'error',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33'
-                        });
-                    }
+                    LimpiarCampos();
+                    $("#tblClientes").dataTable().fnDestroy();
+                    CargarTabla();
+
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     swal({
                         title: 'Sistema de Seguros',
-                         text: "No se pudo realizar la acción",
+                        text: "No se pudo actualizar el Cliente.",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33'
-                    })
+                    });
                 });
             } else {
                 swal({
@@ -217,42 +183,32 @@ function Eliminar(cedula) {
 
                 $.ajax({
                     type: "DELETE",
-                    data: JSON.stringify(Cliente),
+                    data: Cliente,
                     url: UrlAPI + "/Clientes/EliminarCliente"
                 }).done(function (data) {
-                    if (data == "1") {
-                        swal({
-                            title: 'Sistema de Seguros',
-                            text: "Cliente eliminado con éxito.",
-                            type: 'error',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33'
-                        });
 
-                        LimpiarCampos();
-                        $("#tblClientes").dataTable().fnDestroy();
-                        CargarTabla();
-                    }
-                    else {
-                        swal({
-                            title: 'Sistema de Seguros',
-                            text: "No se pudo eliminar el Cliente.",
-                            type: 'error',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33'
-                        });
-                    }
+                    swal({
+                        title: 'Sistema de Seguros',
+                        text: "Cliente eliminado con éxito.",
+                        type: 'success',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33'
+                    });
+
+                    LimpiarCampos();
+                    $("#tblClientes").dataTable().fnDestroy();
+                    CargarTabla();
+
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     swal({
                         title: 'Sistema de Seguros',
-                         text: "No se pudo realizar la acción",
+                        text: "No se pudo eliminar el Cliente.",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33'
-                    })
+                    });
                 });
             }
         });

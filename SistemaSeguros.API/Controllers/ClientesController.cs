@@ -4,7 +4,6 @@ using SistemaSeguros.EX;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -19,88 +18,78 @@ namespace SistemaSeguros.API.Controllers
         private readonly string vccNomClase = "CuentaClienteController";
         readonly BDSistemaSeguros db = new BDSistemaSeguros();
         #region Métodos Públicos
-         
+
         [HttpGet]
-        public HttpResponseMessage CargarClientes()
+        public IEnumerable<Clientes> CargarClientes()
         {
             HttpResponseMessage vloRespuestaApi;
-            List<Clientes> vloListado;
+            List<Clientes> vloListado=null;
             try
             {
                 vloListado = ObtenerClientes();
-                string vlcRespuesta = JsonConvert.SerializeObject(vloListado);
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
-
             }
             catch (Exception)
             {
                 vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
-            return vloRespuestaApi;
+            return vloListado;
         }
 
         [HttpPut]
-        public HttpResponseMessage RegistroCliente()
+        public IHttpActionResult RegistroCliente(Clientes clientes)
         {
             string vlcRespuesta = String.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el cliente como JSON
+                vlcRespuesta = IngresoCliente(clientes);
 
-                vlcRespuesta = IngresoCliente(vlcDatos);
+                return CreatedAtRoute("DefaultApi", new { id = clientes.IdentificacionCliente }, clientes);
 
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
-
-                return vloRespuestaApi;
             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
 
         [HttpPatch]
-        public HttpResponseMessage EditarCliente()
+        public IHttpActionResult EditarCliente(Clientes clientes)
         {
             string vlcRespuesta = String.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el cliente como JSON
+ 
+                vlcRespuesta = ActualizarCliente(clientes);
 
-                vlcRespuesta = ActualizarCliente(vlcDatos);
+                vloRespuestaApi = Ok(vlcRespuesta);
 
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
-
-                return vloRespuestaApi;
             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
 
         [HttpDelete]
-        public HttpResponseMessage EliminarCliente()
+        public IHttpActionResult EliminarCliente(Clientes vloUsuario)
         {
             string vlcRespuesta = String.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
                 string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el cliente como JSON
 
-                vlcRespuesta = EliminarCliente(vlcDatos);
+                vlcRespuesta = Eliminar(vloUsuario);
 
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
-
-                return vloRespuestaApi;
-            }
+                vloRespuestaApi= Ok(vlcRespuesta);
+             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
@@ -118,11 +107,10 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string IngresoCliente(string pvcDatos)
+        private string IngresoCliente(Clientes vloUsuario)
         {
             try
             {
-                Clientes vloUsuario = JsonConvert.DeserializeObject<Clientes>(pvcDatos);
                 if (existeUsuario(vloUsuario.IdentificacionCliente))
                 {
                     return "2";//existe
@@ -132,18 +120,14 @@ namespace SistemaSeguros.API.Controllers
                     db.Clientes.Add(vloUsuario);
                 }
 
-                try
-                {
-                    db.SaveChanges();
-                    return "1";
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    return "0";
-                }
+                db.SaveChanges();
+                return "1";
+
             }
             catch (Exception ex)
             {
+                return "0";
+
                 throw new ControlErrores(System.Reflection.MethodBase.GetCurrentMethod().Name, vccNomClase, ex.Message);
             }
         }
@@ -153,11 +137,10 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string EliminarCliente(string pvcDatos)
+        private string Eliminar(Clientes vloUsuario)
         {
             try
             {
-                Clientes vloUsuario = JsonConvert.DeserializeObject<Clientes>(pvcDatos);
                 if (existeUsuario(vloUsuario.IdentificacionCliente))
                 {
                     Clientes usuarioEliminar = db.Clientes.SingleOrDefault(x => x.IdentificacionCliente == vloUsuario.IdentificacionCliente);
@@ -168,15 +151,10 @@ namespace SistemaSeguros.API.Controllers
                     }
 
                     db.Clientes.Remove(usuarioEliminar);
-                    try
-                    {
-                        db.SaveChanges();
-                        return "1";
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        return "0";
-                    }
+
+                    db.SaveChanges();
+                    return "1";
+
                 }
                 else
                 {
@@ -185,6 +163,8 @@ namespace SistemaSeguros.API.Controllers
             }
             catch (Exception ex)
             {
+                return "0";
+
                 throw new ControlErrores(System.Reflection.MethodBase.GetCurrentMethod().Name, vccNomClase, ex.Message);
             }
         }
@@ -193,23 +173,16 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string ActualizarCliente(string pvcDatos)
+        private string ActualizarCliente(Clientes vloUsuario)
         {
             try
             {
-                Clientes vloUsuario = JsonConvert.DeserializeObject<Clientes>(pvcDatos);
                 if (existeUsuario(vloUsuario.IdentificacionCliente))
                 {
                     db.Entry(vloUsuario).State = EntityState.Modified;
-                    try
-                    {
-                        db.SaveChanges();
-                        return "1";
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        return "0";
-                    }
+
+                    db.SaveChanges();
+                    return "1";
                 }
                 else
                 {
@@ -218,10 +191,12 @@ namespace SistemaSeguros.API.Controllers
             }
             catch (Exception ex)
             {
+                return "0";
+
                 throw new ControlErrores(System.Reflection.MethodBase.GetCurrentMethod().Name, vccNomClase, ex.Message);
             }
         }
-    
+
         /// <summary>
         /// Método para obtener la información recibida desde el cliente.
         /// </summary>
@@ -238,7 +213,7 @@ namespace SistemaSeguros.API.Controllers
         /// <returns></returns>
         private List<Clientes> ObtenerClientes()
         {
-            
+
             List<Clientes> listaClientes = new List<Clientes>();
 
             try
@@ -256,7 +231,7 @@ namespace SistemaSeguros.API.Controllers
             {
                 throw new ControlErrores(System.Reflection.MethodBase.GetCurrentMethod().Name, vccNomClase, ex.Message);
             }
-           
+
         }
 
         #endregion

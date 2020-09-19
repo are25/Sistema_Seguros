@@ -25,55 +25,34 @@ $(document).ready(function () {
             var TipoRiesgo = { Id: 0, Descripcion: $(txtNombre).val() };
             $.ajax({
                 type: "PUT",
-                data: JSON.stringify(TipoRiesgo),
+                data: TipoRiesgo,
+                dataType: "json",
+
                 url: UrlAPI + "/TipoRiesgo/RegistroTipoRiesgo"
             }).done(function (data) {
-                if (data == "1") {
-                    swal({
-                        title: 'Sistema de Seguros',
-                        text: "TipoRiesgo agregado con éxito.",
-                        type: 'error',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33'
-                    });
 
-                    LimpiarCampos();
-                    $("#tblTipoRiesgo").dataTable().fnDestroy();
-                    CargarTabla();
-                } else if (data == "2") {
-                    swal({
-                        title: 'Sistema de Seguros',
-                        text: "Tipo Riesgo existente.",
-                        type: 'error',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33'
-                    });
+                swal({
+                    title: 'Sistema de Seguros',
+                    text: "TipoRiesgo agregado con éxito.",
+                    type: 'success',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33'
+                });
 
-                    LimpiarCampos();
-                    $("#tblTipoRiesgo").dataTable().fnDestroy();
-                    CargarTabla();
-                }
-                else {
-                    swal({
-                        title: 'Sistema de Seguros',
-                        text: "No se pudo guardar el Tipo Riesgo.",
-                        type: 'error',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33'
-                    });
-                }
+                LimpiarCampos();
+                $("#tblTipoRiesgo").dataTable().fnDestroy();
+                CargarTabla();
+
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 swal({
                     title: 'Sistema de Seguros',
-                     text: "No se pudo realizar la acción",
+                    text: "No se pudo guardar el Tipo Riesgo.",
                     type: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33'
-                })
+                });
             });
 
 
@@ -97,42 +76,33 @@ $(document).ready(function () {
             var TipoRiesgo = { Id: $(txtId).val(), Descripcion: $(txtNombre).val() };
             $.ajax({
                 type: "PATCH",
-                data: JSON.stringify(TipoRiesgo),
+                dataType: "json",
+
+                data: TipoRiesgo,
                 url: UrlAPI + "/TipoRiesgo/EditarTipoRiesgo"
             }).done(function (data) {
-                if (data == "1") {
-                    swal({
-                        title: 'Sistema de Seguros',
-                        text: "Tipo Riesgo actualizado con éxito.",
-                        type: 'error',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33'
-                    });
+                swal({
+                    title: 'Sistema de Seguros',
+                    text: "Tipo Riesgo actualizado con éxito.",
+                    type: 'success',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33'
+                });
 
-                    LimpiarCampos();
-                    $("#tblTipoRiesgo").dataTable().fnDestroy();
-                    CargarTabla();
-                }
-                else {
-                    swal({
-                        title: 'Sistema de Seguros',
-                        text: "No se pudo actualizar el Tipo Riesgo.",
-                        type: 'error',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33'
-                    });
-                }
+                LimpiarCampos();
+                $("#tblTipoRiesgo").dataTable().fnDestroy();
+                CargarTabla();
+
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 swal({
                     title: 'Sistema de Seguros',
-                     text: "No se pudo realizar la acción",
+                    text: "No se pudo actualizar el Tipo Riesgo.",
                     type: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33'
-                })
+                });
             });
 
         } else {
@@ -144,7 +114,7 @@ $(document).ready(function () {
                 confirmButtonColor: '#3085d6',
 
             });
-                }
+        }
     });
 
 
@@ -182,14 +152,15 @@ function Eliminar(Id) {
 
                 $.ajax({
                     type: "DELETE",
-                    data: JSON.stringify(TipoRiesgo),
+                    data: TipoRiesgo,
+                    dataType: "json",
+
                     url: UrlAPI + "/TipoRiesgo/EliminarTipoRiesgo"
                 }).done(function (data) {
-                    if (data == "1") {
-                        swal({
+                         swal({
                             title: 'Sistema de Seguros',
                             text: "Tipo Riesgo eliminado con éxito.",
-                            type: 'error',
+                            type: 'success',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
                             cancelButtonColor: '#d33'
@@ -198,26 +169,16 @@ function Eliminar(Id) {
                         LimpiarCampos();
                         $("#tblTipoRiesgo").dataTable().fnDestroy();
                         CargarTabla();
-                    }
-                    else {
-                        swal({
-                            title: 'Sistema de Seguros',
-                            text: "No se pudo eliminar el Tipo Riesgo.",
-                            type: 'error',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33'
-                        });
-                    }
+                    
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     swal({
                         title: 'Sistema de Seguros',
-                         text: "No se pudo realizar la acción",
+                        text: "No se pudo eliminar el Tipo Riesgo.",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33'
-                    })
+                    });
                 });
             }
         });

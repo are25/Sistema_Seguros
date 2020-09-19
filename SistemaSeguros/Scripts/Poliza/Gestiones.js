@@ -250,7 +250,7 @@ function CargarCatalogos() {
             $(cboPoliza).empty();
             $(cboPoliza).append($("<option/>").val(0).text("Seleccione"));
 
-            $.each(JSON.parse(data), function (key, value) {
+            $.each(data, function (key, value) {
                 $(cboPoliza).append($("<option/>").val(value.Id).text(value.Nombre));
             })
         }
@@ -263,7 +263,7 @@ function CargarCatalogos() {
             $(cboCliente).empty();
             $(cboCliente).append($("<option/>").val(0).text("Seleccione"));
 
-            $.each(JSON.parse(data), function (key, value) {
+            $.each(data, function (key, value) {
                 $(cboCliente).append($("<option/>").val(value.IdentificacionCliente).text(value.NombreCliente));
             })
         }

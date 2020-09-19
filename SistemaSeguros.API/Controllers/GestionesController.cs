@@ -171,6 +171,7 @@ namespace SistemaSeguros.API.Controllers
                 throw new ControlErrores(System.Reflection.MethodBase.GetCurrentMethod().Name, vccNomClase, ex.Message);
             }
         }
+        
         /// <summary>
         /// Método para obtener la información recibida desde el cliente.
         /// </summary>
@@ -181,6 +182,7 @@ namespace SistemaSeguros.API.Controllers
 
             return vlcDatos;
         }
+        
         /// <summary>
         /// Actualizar póliza del sistema.
         /// </summary>

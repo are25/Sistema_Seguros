@@ -21,86 +21,79 @@ namespace SistemaSeguros.API.Controllers
         #region Métodos Públicos
 
         [HttpGet]
-        public HttpResponseMessage CargarPolizas()
+        public IEnumerable<Poliza> CargarPolizas()
         {
-            HttpResponseMessage vloRespuestaApi;
-            List<Poliza> vloListado;
+            List<Poliza> vloListado=null;
             try
             {
                 vloListado = ObtenerPolizas();
-                string vlcRespuesta = JsonConvert.SerializeObject(vloListado);
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
+                 
 
             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                 InternalServerError();
             }
-            return vloRespuestaApi;
+            return vloListado;
         }
 
         [HttpPatch]
-        public HttpResponseMessage EditarPolizas()
+        public IHttpActionResult EditarPolizas(Poliza Polizas)
         {
             string vlcRespuesta = String.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el cliente como JSON
+ 
+                vlcRespuesta = ActualizarPoliza(Polizas);
 
-                vlcRespuesta = ActualizarPoliza(vlcDatos);
+                vloRespuestaApi = Ok(vlcRespuesta);
 
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
-
-                return vloRespuestaApi;
             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
         
         [HttpDelete]
-        public HttpResponseMessage EliminarPolizas()
+        public IHttpActionResult EliminarPolizas(Poliza Polizas)
         {
             string vlcRespuesta = String.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el cliente como JSON
 
-                vlcRespuesta = EliminarPolizas(vlcDatos);
+                vlcRespuesta = Eliminar(Polizas);
 
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
+                vloRespuestaApi = Ok(vlcRespuesta);
 
-                return vloRespuestaApi;
             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
 
         [HttpPut]
-        public HttpResponseMessage RegistroPolizas()
+        public IHttpActionResult RegistroPolizas(Poliza Polizas)
         {
             string vlcRespuesta = String.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el cliente como JSON
 
-                vlcRespuesta = IngresoPoliza(vlcDatos);
+                vlcRespuesta = IngresoPoliza(Polizas);
+                vloRespuestaApi = Ok(vlcRespuesta);
+                Polizas.Id = int.Parse(vlcRespuesta);
+                return CreatedAtRoute("DefaultApi", new { id = Polizas.Nombre }, Polizas);
 
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
-
-                return vloRespuestaApi;
-            }
+             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
@@ -114,11 +107,10 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string EliminarPolizas(string pvcDatos)
+        private string Eliminar(Poliza vloPoliza)
         {
             try
             {
-                Poliza vloPoliza = JsonConvert.DeserializeObject<Poliza>(pvcDatos);
 
                 Poliza polizaEliminar = db.Poliza.SingleOrDefault(x => x.Id == vloPoliza.Id);
 
@@ -149,12 +141,11 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string ActualizarPoliza(string pvcDatos)
+        private string ActualizarPoliza(Poliza vloPoliza)
         {
             try
             {
-                Poliza vloPoliza = JsonConvert.DeserializeObject<Poliza>(pvcDatos);
-                vloPoliza.FinVigencia = vloPoliza.InicioVigencia.AddMonths(vloPoliza.PeriodoCobertura);//sumar a la fecha final de vigencia de la póliza, los meses de cobertura.
+                 vloPoliza.FinVigencia = vloPoliza.InicioVigencia.AddMonths(vloPoliza.PeriodoCobertura);//sumar a la fecha final de vigencia de la póliza, los meses de cobertura.
                 //Validar si riesgo es alto, que el % no sea superior a 50.
                 if (vloPoliza.IdTipoRiesgo == 4)
                 {
@@ -231,12 +222,11 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string IngresoPoliza(string pvcDatos)
+        private string IngresoPoliza(Poliza vloPoliza)
         {
             try
             {
-                Poliza vloPoliza = JsonConvert.DeserializeObject<Poliza>(pvcDatos);
-                vloPoliza.FinVigencia = vloPoliza.InicioVigencia.AddMonths(vloPoliza.PeriodoCobertura);//sumar a la fecha final de vigencia de la póliza, los meses de cobertura.
+                 vloPoliza.FinVigencia = vloPoliza.InicioVigencia.AddMonths(vloPoliza.PeriodoCobertura);//sumar a la fecha final de vigencia de la póliza, los meses de cobertura.
                 //Validar si riesgo es alto, que el % no sea superior a 50.
                 if(vloPoliza.IdTipoRiesgo == 4)
                 {

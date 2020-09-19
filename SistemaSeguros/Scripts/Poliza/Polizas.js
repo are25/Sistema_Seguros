@@ -35,8 +35,8 @@ $(document).ready(function () {
         if ($(txtNombre).val() != ""
             && $(txtCobertura).val() != ""
             && $(txtPeriodo).val() != ""
-            && $(cboRiesgo).val() != ""
-            && $(cboCubrimiento).val() != ""
+            && $(cboRiesgo).val() != "0"
+            && $(cboCubrimiento).val() != "0"
             && $(txtVigenciaI).val() != ""
             && $(txtDescripcion).val() != ""
             && $(txtPrecio).val() != "") {
@@ -46,10 +46,12 @@ $(document).ready(function () {
             var Polizas = { Id: 0, Nombre: $(txtNombre).val(), CoberturaPoliza: $(txtCobertura).val(), PeriodoCobertura: $(txtPeriodo).val(), IdTipoRiesgo: $(cboRiesgo).val(), IdTipoCubrimiento: $(cboCubrimiento).val(), InicioVigencia: fecha, Descripcion: $(txtDescripcion).val(), PrecioPoliza: $(txtPrecio).val() };
             $.ajax({
                 type: "PUT",
-                data: JSON.stringify(Polizas),
+                data: Polizas,
+                dataType: "json",
+
                 url: UrlAPI + "/Polizas/RegistroPolizas"
             }).done(function (data) {
-                if (data == "1") {
+                if (data.Id == "1") {
                     swal({
                         title: 'Sistema de Seguros',
                         text: "Póliza agregado con éxito.",
@@ -62,7 +64,7 @@ $(document).ready(function () {
                     LimpiarCampos();
                     $("#tblPolizas").dataTable().fnDestroy();
                     CargarTabla();
-                } else if (data == "2") {
+                } else if (data.Id == "2") {
                     swal({
                         title: 'Sistema de Seguros',
                         text: "La % de cubrimiento no puede ser mayor a 50, debido al riesgo alto.!",
@@ -89,7 +91,7 @@ $(document).ready(function () {
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 swal({
                     title: 'Sistema de Seguros',
-                     text: "No se pudo realizar la acción",
+                    text: "No se pudo realizar la acción",
                     type: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -123,7 +125,8 @@ $(document).ready(function () {
             var Polizas = { Id: $(txtId).val(), Nombre: $(txtNombre).val(), CoberturaPoliza: $(txtCobertura).val(), PeriodoCobertura: $(txtPeriodo).val(), IdTipoRiesgo: $(cboRiesgo).val(), IdTipoCubrimiento: $(cboCubrimiento).val(), InicioVigencia: fecha, Descripcion: $(txtDescripcion).val(), PrecioPoliza: $(txtPrecio).val() };
             $.ajax({
                 type: "PATCH",
-                data: JSON.stringify(Polizas),
+                data: Polizas,
+                dataType: "json",
                 url: UrlAPI + "/Polizas/EditarPolizas"
             }).done(function (data) {
                 if (data == "1") {
@@ -167,7 +170,7 @@ $(document).ready(function () {
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 swal({
                     title: 'Sistema de Seguros',
-                     text: "No se pudo realizar la acción",
+                    text: "No se pudo realizar la acción",
                     type: 'error',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -233,42 +236,32 @@ function Eliminar(Id) {
 
                 $.ajax({
                     type: "DELETE",
-                    data: JSON.stringify(Polizas),
+                    data: Polizas,
+                    dataType: "json",
                     url: UrlAPI + "/Polizas/EliminarPolizas"
                 }).done(function (data) {
-                    if (data == "1") {
-                        swal({
-                            title: 'Sistema de Seguros',
-                            text: "Póliza eliminado con éxito.",
-                            type: 'error',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33'
-                        });
-
-                        LimpiarCampos();
-                        $("#tblPolizas").dataTable().fnDestroy();
-                        CargarTabla();
-                    }
-                    else {
-                        swal({
-                            title: 'Sistema de Seguros',
-                            text: "No se pudo eliminar la póliza.",
-                            type: 'error',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33'
-                        });
-                    }
-                }).fail(function (jqXHR, textStatus, errorThrown) {
                     swal({
                         title: 'Sistema de Seguros',
-                         text: "No se pudo realizar la acción",
+                        text: "Póliza eliminado con éxito.",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33'
-                    })
+                    });
+
+                    LimpiarCampos();
+                    $("#tblPolizas").dataTable().fnDestroy();
+                    CargarTabla();
+
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    swal({
+                        title: 'Sistema de Seguros',
+                        text: "No se pudo eliminar la póliza.",
+                        type: 'error',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33'
+                    });
                 });
             }
         });
@@ -283,7 +276,7 @@ function CargarCatalogos() {
             $(cboRiesgo).empty();
             $(cboRiesgo).append($("<option/>").val(0).text("Seleccione"));
 
-            $.each(JSON.parse(data), function (key, value) {
+            $.each(data, function (key, value) {
                 $(cboRiesgo).append($("<option/>").val(value.Id).text(value.Descripcion));
             })
         }
@@ -296,7 +289,7 @@ function CargarCatalogos() {
             $(cboCubrimiento).empty();
             $(cboCubrimiento).append($("<option/>").val(0).text("Seleccione"));
 
-            $.each(JSON.parse(data), function (key, value) {
+            $.each(data, function (key, value) {
                 $(cboCubrimiento).append($("<option/>").val(value.Id).text(value.Descripcion));
             })
         }

@@ -21,86 +21,79 @@ namespace SistemaSeguros.API.Controllers
         #region Métodos Públicos
 
         [HttpGet]
-        public HttpResponseMessage CargarTipoRiesgos()
+        public IEnumerable<TipoRiesgo> CargarTipoRiesgos()
         {
-            HttpResponseMessage vloRespuestaApi;
-            List<TipoRiesgo> vloListado;
+             List<TipoRiesgo> vloListado=null;
             try
             {
                 vloListado = ObtenerTipoRiesgos();
-                string vlcRespuesta = JsonConvert.SerializeObject(vloListado);
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
+                
 
             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                InternalServerError();
             }
-            return vloRespuestaApi;
+            return vloListado;
         }
 
         [HttpPut]
-        public HttpResponseMessage RegistroTipoRiesgo()
+        public IHttpActionResult RegistroTipoRiesgo(TipoRiesgo TipoRiesgo)
         {
             string vlcRespuesta = String.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el TipoRiesgo como JSON
+ 
+                vlcRespuesta = IngresoTipoRiesgo(TipoRiesgo);
 
-                vlcRespuesta = IngresoTipoRiesgo(vlcDatos);
+                return CreatedAtRoute("DefaultApi", new { id = TipoRiesgo.Descripcion }, TipoRiesgo);
 
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
-
-                return vloRespuestaApi;
             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
 
         [HttpPatch]
-        public HttpResponseMessage EditarTipoRiesgo()
+        public IHttpActionResult EditarTipoRiesgo(TipoRiesgo TipoRiesgo)
         {
             string vlcRespuesta = String.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el TipoRiesgo como JSON
+ 
+                vlcRespuesta = ActualizarTipoRiesgo(TipoRiesgo);
 
-                vlcRespuesta = ActualizarTipoRiesgo(vlcDatos);
-
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
+                vloRespuestaApi = Ok(vlcRespuesta) ;
 
                 return vloRespuestaApi;
             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
 
         [HttpDelete]
-        public HttpResponseMessage EliminarTipoRiesgo()
+        public IHttpActionResult EliminarTipoRiesgo(TipoRiesgo TipoRiesgo)
         {
             string vlcRespuesta = String.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el TipoRiesgo como JSON
+  
+                vlcRespuesta = Eliminar(TipoRiesgo);
 
-                vlcRespuesta = EliminarTipoRiesgo(vlcDatos);
+                vloRespuestaApi = Ok(vlcRespuesta);
 
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
-
-                return vloRespuestaApi;
-            }
+             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
@@ -118,13 +111,12 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string IngresoTipoRiesgo(string pvcDatos)
+        private string IngresoTipoRiesgo(TipoRiesgo TipoRiesgo)
         {
             try
             {
-                TipoRiesgo vloUsuario = JsonConvert.DeserializeObject<TipoRiesgo>(pvcDatos);
-
-                db.TipoRiesgo.Add(vloUsuario);
+ 
+                db.TipoRiesgo.Add(TipoRiesgo);
                 try
                 {
                     db.SaveChanges();
@@ -146,14 +138,13 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string EliminarTipoRiesgo(string pvcDatos)
+        private string Eliminar(TipoRiesgo TipoRiesgo)
         {
             try
             {
-                TipoRiesgo vloUsuario = JsonConvert.DeserializeObject<TipoRiesgo>(pvcDatos);
-                if (existeDato(vloUsuario.Id))
+                 if (existeDato(TipoRiesgo.Id))
                 {
-                    TipoRiesgo usuarioEliminar = db.TipoRiesgo.SingleOrDefault(x => x.Id == vloUsuario.Id);
+                    TipoRiesgo usuarioEliminar = db.TipoRiesgo.SingleOrDefault(x => x.Id == TipoRiesgo.Id);
 
                     if (usuarioEliminar == null)
                     {
@@ -186,14 +177,13 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string ActualizarTipoRiesgo(string pvcDatos)
+        private string ActualizarTipoRiesgo(TipoRiesgo TipoRiesgo)
         {
             try
             {
-                TipoRiesgo vloUsuario = JsonConvert.DeserializeObject<TipoRiesgo>(pvcDatos);
-                if (existeDato(vloUsuario.Id))
+                 if (existeDato(TipoRiesgo.Id))
                 {
-                    db.Entry(vloUsuario).State = EntityState.Modified;
+                    db.Entry(TipoRiesgo).State = EntityState.Modified;
                     try
                     {
                         db.SaveChanges();

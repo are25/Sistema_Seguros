@@ -21,86 +21,79 @@ namespace SistemaSeguros.API.Controllers
         #region Métodos Públicos
 
         [HttpGet]
-        public HttpResponseMessage CargarTipoCubrimiento()
+        public IEnumerable<TipoCubrimiento> CargarTipoCubrimiento()
         {
-            HttpResponseMessage vloRespuestaApi;
-            List<TipoCubrimiento> vloListado;
+             List<TipoCubrimiento> vloListado=null;
             try
             {
                 vloListado = ObtenerTipoCubrimiento();
-                string vlcRespuesta = JsonConvert.SerializeObject(vloListado);
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
-
+ 
             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                InternalServerError();
             }
-            return vloRespuestaApi;
+            return vloListado;
         }
 
         [HttpPut]
-        public HttpResponseMessage RegistroTipoCubrimiento()
+        public IHttpActionResult RegistroTipoCubrimiento(TipoCubrimiento TipoCubrimiento)
         {
             string vlcRespuesta = String.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el TipoCubrimiento como JSON
 
-                vlcRespuesta = IngresoTipoCubrimiento(vlcDatos);
+                vlcRespuesta = IngresoTipoCubrimiento(TipoCubrimiento);
 
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
 
-                return vloRespuestaApi;
+                return CreatedAtRoute("DefaultApi", new { id = TipoCubrimiento.Descripcion }, TipoCubrimiento);
             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
 
         [HttpPatch]
-        public HttpResponseMessage EditarTipoCubrimiento()
+        public IHttpActionResult EditarTipoCubrimiento(TipoCubrimiento TipoCubrimiento)
         {
             string vlcRespuesta = String.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el TipoCubrimiento como JSON
 
-                vlcRespuesta = ActualizarTipoCubrimiento(vlcDatos);
+                vlcRespuesta = ActualizarTipoCubrimiento(TipoCubrimiento);
 
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
+                vloRespuestaApi = Ok(vlcRespuesta);
 
                 return vloRespuestaApi;
             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
 
         [HttpDelete]
-        public HttpResponseMessage EliminarTipoCubrimiento()
+        public IHttpActionResult EliminarTipoCubrimiento(TipoCubrimiento TipoCubrimiento)
         {
             string vlcRespuesta = String.Empty;
-            HttpResponseMessage vloRespuestaApi;
+            IHttpActionResult vloRespuestaApi;
             try
             {
-                string vlcDatos = ObtenerInformacion();//Obtener la información enviada por el TipoCubrimiento como JSON
+ 
+                vlcRespuesta = Eliminar(TipoCubrimiento);
 
-                vlcRespuesta = EliminarTipoCubrimiento(vlcDatos);
-
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
+                vloRespuestaApi = Ok(vlcRespuesta);
 
                 return vloRespuestaApi;
             }
             catch (Exception)
             {
-                vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                vloRespuestaApi = InternalServerError();
             }
             return vloRespuestaApi;
         }
@@ -118,12 +111,11 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string IngresoTipoCubrimiento(string pvcDatos)
+        private string IngresoTipoCubrimiento(TipoCubrimiento vloCubrimiento)
         {
             try
             {
-                TipoCubrimiento vloCubrimiento = JsonConvert.DeserializeObject<TipoCubrimiento>(pvcDatos);
-
+ 
                 db.TipoCubrimiento.Add(vloCubrimiento);
                 try
                 {
@@ -146,12 +138,11 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string EliminarTipoCubrimiento(string pvcDatos)
+        private string Eliminar(TipoCubrimiento vloCubrimiento)
         {
             try
             {
-                TipoCubrimiento vloCubrimiento = JsonConvert.DeserializeObject<TipoCubrimiento>(pvcDatos);
-                if (existeDato(vloCubrimiento.Id))
+                 if (existeDato(vloCubrimiento.Id))
                 {
                     TipoCubrimiento cubrimientoEliminar = db.TipoCubrimiento.SingleOrDefault(x => x.Id == vloCubrimiento.Id);
 
@@ -186,12 +177,11 @@ namespace SistemaSeguros.API.Controllers
         /// </summary>
         /// <param name="pvcDatos"></param>
         /// <returns></returns>
-        private string ActualizarTipoCubrimiento(string pvcDatos)
+        private string ActualizarTipoCubrimiento(TipoCubrimiento vloCubrimiento)
         {
             try
             {
-                TipoCubrimiento vloCubrimiento = JsonConvert.DeserializeObject<TipoCubrimiento>(pvcDatos);
-                if (existeDato(vloCubrimiento.Id))
+                 if (existeDato(vloCubrimiento.Id))
                 {
                     db.Entry(vloCubrimiento).State = EntityState.Modified;
                     try
