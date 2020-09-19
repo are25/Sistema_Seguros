@@ -1,14 +1,16 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title </title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <style>
-        table.dataTable thead {background-color:#158cba}
+        table.dataTable thead {
+            background-color: #158cba
+        }
     </style>
 </head>
 <body>
@@ -24,8 +26,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
+                    <li>@Html.ActionLink("Gestiones de póliza", "ManejoPoliza", "Home")</li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="subMenu">Administración <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Usuarios", "Usuarios", "Home")</li>
                             <li>@Html.ActionLink("Clientes", "Clientes", "Home")</li>
@@ -34,13 +38,12 @@
                             <li>@Html.ActionLink("Póliza", "Poliza", "Home")</li>
                         </ul>
                     </li>
-                    <li>@Html.ActionLink("Gestiones de póliza", "ManejoPoliza", "Home")</li>
                     <li></li>
                     <li></li>
                     <li></li>
                     <li style="margin-left: 395px;">@Html.ActionLink("Cerrar Sesión", "Cerrar", "Home")</li>
                 </ul>
-                
+
 
             </div>
         </div>
@@ -56,5 +59,19 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+
+            $('#subMenu').click(function (e) {
+                // Kill click event:
+                e.stopPropagation();
+                // Toggle dropdown if not already visible:
+                if ($('.dropdown').find('.dropdown-menu').is(":hidden")) {
+                    $('.dropdown-toggle').dropdown('toggle');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
