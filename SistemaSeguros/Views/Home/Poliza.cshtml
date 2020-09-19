@@ -4,7 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+<style>
+    th {
+        width: 138px !important;
+    }
+</style>
 <div class="col-12 mb-3">
     <h4 class="text-gray-color m-0"> Nueva Póliza </h4>
 </div>
@@ -13,8 +17,56 @@
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
+                <p for="">Nombre :</p>
+                <input type="text" placeholder="0" id="txtNombre" name="txtNombre" class="form-control" maxlength="100">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
                 <p for="">Descripción:</p>
-                <input type="text" placeholder="0" id="txtDescripcion" name="txtDescripcion" class="form-control" maxlength="100">
+                <input type="text" placeholder="0" id="txtDescripcion" name="txtDescripcion" class="form-control" maxlength="200">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <p for="">Cobertura (%):</p>
+                <input type="number" placeholder="0" id="txtCobertura" name="txtCobertura" class="form-control" maxlength="99" min="0" onkeyup="if(this.value<0){this.value= this.value * -1}">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <p for="">Inicio Vigencia:</p>
+                <input type="text" id="txtVigenciaI" placeholder="dd/mm/aa" name="txtVigenciaI" autocomplete="off" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <p for="">Periodo Cobertura (meses):</p>
+                <input type="number" placeholder="0" id="txtPeriodo" name="txtPeriodo" class="form-control" min="0" onkeyup="if(this.value<0){this.value= this.value * -1}">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <p for="">Precio :</p>
+                <input type="number" placeholder="0" id="txtPrecio" name="txtPrecio" class="form-control" maxlength="50" min="0" onkeyup="if(this.value<0){this.value= this.value * -1}">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <p for="">Riesgo:</p>
+                <select class="form-control" id="cboRiesgo">
+                    <option value="">Seleccione</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <p for=""> Cubrimiento:</p>
+                <select class="form-control" id="cboCubrimiento">
+                    <option value="">Seleccione</option>
+                </select>
             </div>
         </div>
 
@@ -41,11 +93,24 @@
     <hr />
     <div class="row">
         <div class="col-sm-12">
-            <table class="table table-hover table-striped table-bordered tablaApp dataTable no-footer" id="tblTipoCubrimiento">
+            <table class="table table-hover table-striped table-bordered tablaApp dataTable no-footer" id="tblPolizas">
                 <thead>
                     <tr>
-                        <th scope="col">Id Tipo Cubrimiento</th>
-                        <th scope="col">Descripción</th>
+
+
+                        <th scope="col">Id Póliza</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Cobertura</th>
+                        <th scope="col">Inicio Vigencia</th>
+                        <th scope="col">Periodo Cobertura</th>
+                        <th scope="col">Fin Vigencia</th>
+                        <th scope="col">Precio</th>
+
+                        <th scope="col">Tipo cubrimiento</th>
+                        <th scope="col">Tipo Riesgo</th>
+
+
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -58,7 +123,7 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 @Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/admin-cubrimiento")
+@Scripts.Render("~/bundles/admin-polizas")
 
 
 

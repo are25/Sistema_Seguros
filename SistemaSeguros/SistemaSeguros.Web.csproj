@@ -145,6 +145,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dataTables.bootstrap.min.css" />
+    <Content Include="Content\datepicker.css" />
     <Content Include="Content\FontAwesome\css\fa-brands.css" />
     <Content Include="Content\FontAwesome\css\fa-brands.min.css" />
     <Content Include="Content\FontAwesome\css\fa-regular.css" />
@@ -276,6 +277,7 @@
     <Content Include="Scripts\CuentaUsuario\Login.js" />
     <Content Include="Scripts\CuentaUsuario\Usuarios.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\datepicker.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -288,6 +290,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Poliza\Polizas.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -306,6 +309,7 @@
     <Content Include="Views\Home\Riesgo.cshtml" />
     <Content Include="Views\Home\Cubrimiento.cshtml" />
     <Content Include="Views\Home\Poliza.cshtml" />
+    <Content Include="Views\Home\ManejoPoliza.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

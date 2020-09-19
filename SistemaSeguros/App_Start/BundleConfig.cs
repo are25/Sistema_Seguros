@@ -23,14 +23,17 @@ namespace SistemaSeguros
                       "~/Scripts/bootstrap.js"
                       , "~/Content/sweetalert/sweetalert.min.js"
                       , "~/Scripts/jquery.dataTables.min.js",
-                      "~/Scripts/dataTables.bootstrap.min.js"));
+                      "~/Scripts/dataTables.bootstrap.min.js" ,
+                      "~/Scripts/moment.min.js" ,
+                      "~/Scripts/datepicker.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                      "~/Content/bootstrap-lumen.css",
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/FontAwesome/css/fontawesome-all.min.css",
                       "~/Content/site.css"
-                      , "~/Content/dataTables.bootstrap.min.css"));
+                      , "~/Content/dataTables.bootstrap.min.css"
+                      , "~/Content/datepicker.css"));
 
             bundles.Add(new StyleBundle("~/Content/login").Include(
                      "~/Content/util.css",
@@ -47,6 +50,7 @@ namespace SistemaSeguros
             bundles.Add(new ScriptBundle("~/bundles/admin-clientes").Include("~/Scripts/CuentaUsuario/Clientes.js"));
             bundles.Add(new ScriptBundle("~/bundles/admin-tipoRiesgo").Include("~/Scripts/Catalogo/TipoRiesgo.js"));
             bundles.Add(new ScriptBundle("~/bundles/admin-cubrimiento").Include("~/Scripts/Catalogo/Cubrimiento.js"));
+            bundles.Add(new ScriptBundle("~/bundles/admin-polizas").Include("~/Scripts/Poliza/Polizas.js"));
 
 
         }

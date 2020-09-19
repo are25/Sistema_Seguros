@@ -56,7 +56,7 @@ $(document).ready(function () {
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     swal({
                         title: 'Sistema de Seguros',
-                        text: jqXHR.responseText || textStatus,
+                        text: "No se pudo iniciar sesión",
                         type: 'error',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',

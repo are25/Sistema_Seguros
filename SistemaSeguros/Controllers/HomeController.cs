@@ -63,6 +63,11 @@ namespace SistemaSeguros.Controllers
             return RedirectToAction("Login", "Home");
         }
 
+        public ActionResult ManejoPoliza()
+        {
+            return View();
+        }
+
         public JsonResult CrearCookie(string Usuario)
         {
             FormsAuthentication.SetAuthCookie(Usuario, false);
