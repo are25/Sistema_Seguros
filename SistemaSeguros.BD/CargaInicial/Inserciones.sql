@@ -3,7 +3,7 @@ Inserciones iniciales para el uso del sistema, conectado a Base de datos
 **/
 ---Inserción a usuarios
 
-INSERT INTO Usuarios VALUES ('304670958','Arelis','arelisd.25@gmail.com','areorozco2020')
+INSERT INTO Usuarios VALUES ('304670958','DEMO','demo.25@gmail.com','demo2020')
 	, ('101110222','Demo','demo@gmail.com','demo2020')
 
 ---Inserción a clientes
