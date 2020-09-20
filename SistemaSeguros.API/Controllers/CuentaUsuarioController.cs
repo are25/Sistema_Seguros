@@ -8,7 +8,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using SistemaSeguros.EX;
-
 using System.Web.Http.Cors;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
@@ -52,7 +51,7 @@ namespace SistemaSeguros.API.Controllers
             try
             {
                 vloListado = ObtenerUsuarios();
- 
+
             }
             catch (Exception)
             {
@@ -72,7 +71,7 @@ namespace SistemaSeguros.API.Controllers
 
                 return CreatedAtRoute("DefaultApi", new { id = usuario.Identificacion }, usuario);
 
-             }
+            }
             catch (Exception)
             {
                 vloRespuestaApi = InternalServerError();
@@ -87,11 +86,11 @@ namespace SistemaSeguros.API.Controllers
             IHttpActionResult vloRespuestaApi;
             try
             {
- 
+
                 vlcRespuesta = ActualizarUsuario(usuario);
 
                 vloRespuestaApi = Ok(vlcRespuesta);
-             }
+            }
             catch (Exception)
             {
                 vloRespuestaApi = InternalServerError();
@@ -106,7 +105,7 @@ namespace SistemaSeguros.API.Controllers
             HttpResponseMessage vloRespuestaApi;
             try
             {
- 
+
                 vlcRespuesta = Eliminar(usuarios);
 
                 vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(vlcRespuesta) };
@@ -119,7 +118,7 @@ namespace SistemaSeguros.API.Controllers
             }
             return vloRespuestaApi;
         }
-         
+
         #endregion
 
         #region Métodos privados
@@ -138,7 +137,7 @@ namespace SistemaSeguros.API.Controllers
         {
             try
             {
-                 if (existeUsuario(vloUsuario.Identificacion))
+                if (existeUsuario(vloUsuario.Identificacion))
                 {
                     return "2";//existe
                 }
@@ -165,7 +164,7 @@ namespace SistemaSeguros.API.Controllers
             }
         }
 
-        
+
         /// <summary>
         /// Eliminación de usuario
         /// </summary>
@@ -217,7 +216,7 @@ namespace SistemaSeguros.API.Controllers
         {
             try
             {
-                 if (existeUsuario(vloUsuario.Identificacion))
+                if (existeUsuario(vloUsuario.Identificacion))
                 {
                     db.Entry(vloUsuario).State = EntityState.Modified;
 

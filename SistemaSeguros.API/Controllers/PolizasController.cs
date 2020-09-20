@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json;
-using SistemaSeguros.API.Models;
+﻿using SistemaSeguros.API.Models;
 using SistemaSeguros.EX;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -23,16 +20,16 @@ namespace SistemaSeguros.API.Controllers
         [HttpGet]
         public IEnumerable<Poliza> CargarPolizas()
         {
-            List<Poliza> vloListado=null;
+            List<Poliza> vloListado = null;
             try
             {
                 vloListado = ObtenerPolizas();
-                 
+
 
             }
             catch (Exception)
             {
-                 InternalServerError();
+                InternalServerError();
             }
             return vloListado;
         }
@@ -44,7 +41,7 @@ namespace SistemaSeguros.API.Controllers
             IHttpActionResult vloRespuestaApi;
             try
             {
- 
+
                 vlcRespuesta = ActualizarPoliza(Polizas);
 
                 vloRespuestaApi = Ok(vlcRespuesta);
@@ -56,7 +53,7 @@ namespace SistemaSeguros.API.Controllers
             }
             return vloRespuestaApi;
         }
-        
+
         [HttpDelete]
         public IHttpActionResult EliminarPolizas(Poliza Polizas)
         {
@@ -91,7 +88,7 @@ namespace SistemaSeguros.API.Controllers
 
                 return CreatedAtRoute("DefaultApi", new { id = Polizas.Id }, Polizas);
 
-             }
+            }
             catch (Exception)
             {
                 vloRespuestaApi = InternalServerError();
@@ -146,7 +143,7 @@ namespace SistemaSeguros.API.Controllers
         {
             try
             {
-                 vloPoliza.FinVigencia = vloPoliza.InicioVigencia.AddMonths(vloPoliza.PeriodoCobertura);//sumar a la fecha final de vigencia de la póliza, los meses de cobertura.
+                vloPoliza.FinVigencia = vloPoliza.InicioVigencia.AddMonths(vloPoliza.PeriodoCobertura);//sumar a la fecha final de vigencia de la póliza, los meses de cobertura.
                 //Validar si riesgo es alto, que el % no sea superior a 50.
                 if (vloPoliza.IdTipoRiesgo == 4)
                 {
@@ -227,16 +224,16 @@ namespace SistemaSeguros.API.Controllers
         {
             try
             {
-                 vloPoliza.FinVigencia = vloPoliza.InicioVigencia.AddMonths(vloPoliza.PeriodoCobertura);//sumar a la fecha final de vigencia de la póliza, los meses de cobertura.
+                vloPoliza.FinVigencia = vloPoliza.InicioVigencia.AddMonths(vloPoliza.PeriodoCobertura);//sumar a la fecha final de vigencia de la póliza, los meses de cobertura.
                 //Validar si riesgo es alto, que el % no sea superior a 50.
-                if(vloPoliza.IdTipoRiesgo == 4)
+                if (vloPoliza.IdTipoRiesgo == 4)
                 {
                     //verificar porcentaje
-                    if(vloPoliza.CoberturaPoliza > 50)
+                    if (vloPoliza.CoberturaPoliza > 50)
                     {
                         return "2";//no se puede
                     }
-                } 
+                }
                 db.Poliza.Add(vloPoliza);
                 try
                 {

@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json;
-using SistemaSeguros.API.Models;
+﻿using SistemaSeguros.API.Models;
 using SistemaSeguros.EX;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -23,11 +20,11 @@ namespace SistemaSeguros.API.Controllers
         [HttpGet]
         public IEnumerable<TipoRiesgo> CargarTipoRiesgos()
         {
-             List<TipoRiesgo> vloListado=null;
+            List<TipoRiesgo> vloListado = null;
             try
             {
                 vloListado = ObtenerTipoRiesgos();
-                
+
 
             }
             catch (Exception)
@@ -44,7 +41,7 @@ namespace SistemaSeguros.API.Controllers
             IHttpActionResult vloRespuestaApi;
             try
             {
- 
+
                 vlcRespuesta = IngresoTipoRiesgo(TipoRiesgo);
 
                 return CreatedAtRoute("DefaultApi", new { id = TipoRiesgo.Descripcion }, TipoRiesgo);
@@ -64,10 +61,10 @@ namespace SistemaSeguros.API.Controllers
             IHttpActionResult vloRespuestaApi;
             try
             {
- 
+
                 vlcRespuesta = ActualizarTipoRiesgo(TipoRiesgo);
 
-                vloRespuestaApi = Ok(vlcRespuesta) ;
+                vloRespuestaApi = Ok(vlcRespuesta);
 
                 return vloRespuestaApi;
             }
@@ -85,12 +82,12 @@ namespace SistemaSeguros.API.Controllers
             IHttpActionResult vloRespuestaApi;
             try
             {
-  
+
                 vlcRespuesta = Eliminar(TipoRiesgo);
 
                 vloRespuestaApi = Ok(vlcRespuesta);
 
-             }
+            }
             catch (Exception)
             {
                 vloRespuestaApi = InternalServerError();
@@ -115,7 +112,7 @@ namespace SistemaSeguros.API.Controllers
         {
             try
             {
- 
+
                 db.TipoRiesgo.Add(TipoRiesgo);
                 try
                 {
@@ -142,7 +139,7 @@ namespace SistemaSeguros.API.Controllers
         {
             try
             {
-                 if (existeDato(TipoRiesgo.Id))
+                if (existeDato(TipoRiesgo.Id))
                 {
                     TipoRiesgo usuarioEliminar = db.TipoRiesgo.SingleOrDefault(x => x.Id == TipoRiesgo.Id);
 
@@ -181,7 +178,7 @@ namespace SistemaSeguros.API.Controllers
         {
             try
             {
-                 if (existeDato(TipoRiesgo.Id))
+                if (existeDato(TipoRiesgo.Id))
                 {
                     db.Entry(TipoRiesgo).State = EntityState.Modified;
                     try

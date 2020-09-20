@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json;
-using SistemaSeguros.API.Models;
+﻿using SistemaSeguros.API.Models;
 using SistemaSeguros.EX;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -23,11 +20,11 @@ namespace SistemaSeguros.API.Controllers
         [HttpGet]
         public IEnumerable<TipoCubrimiento> CargarTipoCubrimiento()
         {
-             List<TipoCubrimiento> vloListado=null;
+            List<TipoCubrimiento> vloListado = null;
             try
             {
                 vloListado = ObtenerTipoCubrimiento();
- 
+
             }
             catch (Exception)
             {
@@ -84,7 +81,7 @@ namespace SistemaSeguros.API.Controllers
             IHttpActionResult vloRespuestaApi;
             try
             {
- 
+
                 vlcRespuesta = Eliminar(TipoCubrimiento);
 
                 vloRespuestaApi = Ok(vlcRespuesta);
@@ -115,7 +112,7 @@ namespace SistemaSeguros.API.Controllers
         {
             try
             {
- 
+
                 db.TipoCubrimiento.Add(vloCubrimiento);
                 try
                 {
@@ -142,7 +139,7 @@ namespace SistemaSeguros.API.Controllers
         {
             try
             {
-                 if (existeDato(vloCubrimiento.Id))
+                if (existeDato(vloCubrimiento.Id))
                 {
                     TipoCubrimiento cubrimientoEliminar = db.TipoCubrimiento.SingleOrDefault(x => x.Id == vloCubrimiento.Id);
 
@@ -181,7 +178,7 @@ namespace SistemaSeguros.API.Controllers
         {
             try
             {
-                 if (existeDato(vloCubrimiento.Id))
+                if (existeDato(vloCubrimiento.Id))
                 {
                     db.Entry(vloCubrimiento).State = EntityState.Modified;
                     try

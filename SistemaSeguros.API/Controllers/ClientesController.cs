@@ -23,7 +23,7 @@ namespace SistemaSeguros.API.Controllers
         public IEnumerable<ClientesVM> CargarClientes()
         {
             HttpResponseMessage vloRespuestaApi;
-            List<ClientesVM> vloListado=null;
+            List<ClientesVM> vloListado = null;
             try
             {
                 vloListado = ObtenerClientes();
@@ -61,7 +61,7 @@ namespace SistemaSeguros.API.Controllers
             IHttpActionResult vloRespuestaApi;
             try
             {
- 
+
                 vlcRespuesta = ActualizarCliente(clientes);
 
                 vloRespuestaApi = Ok(vlcRespuesta);
@@ -85,8 +85,8 @@ namespace SistemaSeguros.API.Controllers
 
                 vlcRespuesta = Eliminar(vloUsuario);
 
-                vloRespuestaApi= Ok(vlcRespuesta);
-             }
+                vloRespuestaApi = Ok(vlcRespuesta);
+            }
             catch (Exception)
             {
                 vloRespuestaApi = InternalServerError();

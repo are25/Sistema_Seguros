@@ -58,7 +58,7 @@ namespace SistemaSeguros.API.Controllers
                 vloRespuestaApi = new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
             return vloRespuestaApi;
-        }        
+        }
 
         [HttpPatch]
         public HttpResponseMessage EditarPoliza()
@@ -172,7 +172,7 @@ namespace SistemaSeguros.API.Controllers
                 throw new ControlErrores(System.Reflection.MethodBase.GetCurrentMethod().Name, vccNomClase, ex.Message);
             }
         }
-        
+
         /// <summary>
         /// Método para obtener la información recibida desde el cliente.
         /// </summary>
@@ -183,7 +183,7 @@ namespace SistemaSeguros.API.Controllers
 
             return vlcDatos;
         }
-        
+
         /// <summary>
         /// Actualizar póliza del sistema.
         /// </summary>
@@ -194,7 +194,7 @@ namespace SistemaSeguros.API.Controllers
             try
             {
                 PolizaPorCliente vloPoliza = JsonConvert.DeserializeObject<PolizaPorCliente>(pvcDatos);
-                 
+
                 db.Entry(vloPoliza).State = EntityState.Modified;
                 try
                 {
