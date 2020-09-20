@@ -39,15 +39,18 @@ namespace SistemaSeguros.Test
 
             Usuarios usuario = new Usuarios()
             {
-                Identificacion = "1234569f87",
+                Identificacion = "123654789",
                 NombreUsuario = "Usuario Prueba2",
                 Contrasennia = "demo2020",
                 CorreoUsuario = "dco2020@gmail.com"
             };
             // Act
             IHttpActionResult actionResult = controller.RegistroUsuario(usuario);
-            var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<Clientes>;
-
+            var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<Usuarios>;
+            // Assert
+            Assert.IsNotNull(createdResult);
+            Assert.AreEqual("DefaultApi", createdResult.RouteName);
+            Assert.IsNotNull(createdResult.RouteValues["id"]);
 
         }
 
@@ -59,11 +62,16 @@ namespace SistemaSeguros.Test
             TipoRiesgo riesgo = new TipoRiesgo()
             {
                 Id = 0,
-                Descripcion = "Prueba Riesgo"
+                Descripcion = "Prueba Riesg44o"
             };
             // Act
             IHttpActionResult actionResult = controller.RegistroTipoRiesgo(riesgo);
-            var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<Clientes>;
+            var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<TipoRiesgo>;
+
+            // Assert
+            Assert.IsNotNull(createdResult);
+            Assert.AreEqual("DefaultApi", createdResult.RouteName);
+            Assert.IsNotNull(createdResult.RouteValues["id"]);
 
         }
 
@@ -79,34 +87,68 @@ namespace SistemaSeguros.Test
             };
             // Act
             IHttpActionResult actionResult = controller.RegistroTipoCubrimiento(riesgo);
-            var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<Clientes>;
+            var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<TipoCubrimiento>;
+
+            // Assert
+            Assert.IsNotNull(createdResult);
+            Assert.AreEqual("DefaultApi", createdResult.RouteName);
+            Assert.IsNotNull(createdResult.RouteValues["id"]);
 
         }
 
         [TestMethod]
-        public void AgregarPoliza()
+        public void AgregarPolizaCorrecta()
         {
             var controller = new PolizasController();
 
             Poliza poliza = new Poliza()
             {
                 Id = 0,
-                CoberturaPoliza=2500,
-                Descripcion="Prueba póliza",
-                IdTipoCubrimiento=1,
-                IdTipoRiesgo=4,
-                PrecioPoliza=34220,
-                Nombre="POLIZA DEMO",
-                PeriodoCobertura=3,
-                InicioVigencia= Convert.ToDateTime("2020-06-22 15:00:00"),
+                CoberturaPoliza = 20,
+                Descripcion = "Prueba póliza",
+                IdTipoCubrimiento = 1,
+                IdTipoRiesgo = 4,
+                PrecioPoliza = 34220,
+                Nombre = "POLIZA DEMO",
+                PeriodoCobertura = 3,
+                InicioVigencia = Convert.ToDateTime("2020-06-22 15:00:00"),
                 FinVigencia = Convert.ToDateTime("2020-09-22 15:00:00")
             };
             // Act
             IHttpActionResult actionResult = controller.RegistroPolizas(poliza);
-            var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<Clientes>;
+            var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<Poliza>;
+            // Assert
+            Assert.IsNotNull(createdResult);
+            Assert.AreEqual("DefaultApi", createdResult.RouteName);
+            Assert.IsNotNull(createdResult.RouteValues["id"]);
+        }
 
 
+        [TestMethod]
+        public void AgregarPolizaRiesgoAlto()
+        {
+            var controller = new PolizasController();
 
+            Poliza poliza = new Poliza()
+            {
+                Id = 0,
+                CoberturaPoliza = 55,
+                Descripcion = "Prueba póliza",
+                IdTipoCubrimiento = 1,
+                IdTipoRiesgo = 4,
+                PrecioPoliza = 34220,
+                Nombre = "POLIZA DEMO #2",
+                PeriodoCobertura = 3,
+                InicioVigencia = Convert.ToDateTime("2020-06-22 15:00:00"),
+                FinVigencia = Convert.ToDateTime("2020-09-22 15:00:00")
+            };
+            // Act
+            IHttpActionResult actionResult = controller.RegistroPolizas(poliza);
+            var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<Poliza>;
+            // Assert
+            Assert.IsNotNull(createdResult);
+            Assert.AreEqual(2, createdResult.RouteValues["id"]);//El 2 es la bandera para evitar registrar la póliza por riesgo alto.
+            Assert.IsNotNull(createdResult.RouteValues["id"]);
         }
 
     }

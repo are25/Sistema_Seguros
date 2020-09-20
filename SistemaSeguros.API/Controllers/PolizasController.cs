@@ -88,7 +88,8 @@ namespace SistemaSeguros.API.Controllers
                 vlcRespuesta = IngresoPoliza(Polizas);
                 vloRespuestaApi = Ok(vlcRespuesta);
                 Polizas.Id = int.Parse(vlcRespuesta);
-                return CreatedAtRoute("DefaultApi", new { id = Polizas.Nombre }, Polizas);
+
+                return CreatedAtRoute("DefaultApi", new { id = Polizas.Id }, Polizas);
 
              }
             catch (Exception)
