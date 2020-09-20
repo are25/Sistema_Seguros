@@ -51,15 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clientes.cs" />
+    <Compile Include="ClientesVM.cs" />
     <Compile Include="EntidadesJS\Usuario.cs" />
-    <Compile Include="EstadosPoliza.cs" />
-    <Compile Include="Poliza.cs" />
-    <Compile Include="PolizaPorCliente.cs" />
+    <Compile Include="EstadosPolizaVM.cs" />
+    <Compile Include="PolizaVM.cs" />
+    <Compile Include="PolizaPorClienteVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TipoCubrimiento.cs" />
-    <Compile Include="TipoRiesgo.cs" />
-    <Compile Include="Usuarios.cs" />
+    <Compile Include="TipoCubrimientoVM.cs" />
+    <Compile Include="TipoRiesgoVM.cs" />
+    <Compile Include="UsuariosVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

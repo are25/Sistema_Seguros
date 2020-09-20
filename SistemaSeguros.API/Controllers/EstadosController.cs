@@ -16,14 +16,14 @@ namespace SistemaSeguros.API.Controllers
     public class EstadosController : ApiController
     {
         private readonly string vccNomClase = "PolizasController";
-        readonly BDSistemaSeguros db = new BDSistemaSeguros();
+        readonly SistemaSeguros_BD db = new SistemaSeguros_BD();
         #region Métodos Públicos
 
         [HttpGet]
         public HttpResponseMessage CargarEstados()
         {
             HttpResponseMessage vloRespuestaApi;
-            List<EstadosPoliza> vloListado;
+            List<EstadosPolizaVM> vloListado;
             try
             {
                 vloListado = ObtenerEstados();
@@ -45,14 +45,14 @@ namespace SistemaSeguros.API.Controllers
         /// Método para obtener todos los estados.
         /// </summary>
         /// <returns></returns>
-        private List<EstadosPoliza> ObtenerEstados()
+        private List<EstadosPolizaVM> ObtenerEstados()
         {
 
-            List<EstadosPoliza> listaEstados = new List<EstadosPoliza>();
+            List<EstadosPolizaVM> listaEstados = new List<EstadosPolizaVM>();
 
             try
             {
-                db.EstadosPoliza.ToList().ForEach(cp => listaEstados.Add(new EstadosPoliza()
+                db.EstadosPoliza.ToList().ForEach(cp => listaEstados.Add(new EstadosPolizaVM()
                 {
                     Id = cp.Id,
                     Descripcion = cp.Descripcion

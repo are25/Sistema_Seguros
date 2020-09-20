@@ -16,14 +16,14 @@ namespace SistemaSeguros.API.Controllers
     public class ClientesController : ApiController
     {
         private readonly string vccNomClase = "CuentaClienteController";
-        readonly BDSistemaSeguros db = new BDSistemaSeguros();
+        readonly SistemaSeguros_BD db = new SistemaSeguros_BD();
         #region Métodos Públicos
 
         [HttpGet]
-        public IEnumerable<Clientes> CargarClientes()
+        public IEnumerable<ClientesVM> CargarClientes()
         {
             HttpResponseMessage vloRespuestaApi;
-            List<Clientes> vloListado=null;
+            List<ClientesVM> vloListado=null;
             try
             {
                 vloListado = ObtenerClientes();
@@ -211,14 +211,14 @@ namespace SistemaSeguros.API.Controllers
         /// Método para obtener todos los usuarios.
         /// </summary>
         /// <returns></returns>
-        private List<Clientes> ObtenerClientes()
+        private List<ClientesVM> ObtenerClientes()
         {
 
-            List<Clientes> listaClientes = new List<Clientes>();
+            List<ClientesVM> listaClientes = new List<ClientesVM>();
 
             try
             {
-                db.Clientes.ToList().ForEach(cp => listaClientes.Add(new Clientes()
+                db.Clientes.ToList().ForEach(cp => listaClientes.Add(new ClientesVM()
                 {
                     IdentificacionCliente = cp.IdentificacionCliente,
                     NombreCliente = cp.NombreCliente,

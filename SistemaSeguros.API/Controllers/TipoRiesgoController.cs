@@ -17,7 +17,7 @@ namespace SistemaSeguros.API.Controllers
     public class TipoRiesgoController : ApiController
     {
         private readonly string vccNomClase = "TipoRiesgoController";
-        readonly BDSistemaSeguros db = new BDSistemaSeguros();
+        readonly SistemaSeguros_BD db = new SistemaSeguros_BD();
         #region Métodos Públicos
 
         [HttpGet]

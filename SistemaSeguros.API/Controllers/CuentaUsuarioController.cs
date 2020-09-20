@@ -19,7 +19,7 @@ namespace SistemaSeguros.API.Controllers
     public class CuentaUsuarioController : ApiController
     {
         private readonly string vccNomClase = "CuentaUsuarioController";
-        readonly BDSistemaSeguros db = new BDSistemaSeguros();
+        readonly SistemaSeguros_BD db = new SistemaSeguros_BD();
 
         #region Métodos Públicos
         [HttpPost]
@@ -45,10 +45,10 @@ namespace SistemaSeguros.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Usuarios> CargarUsuarios()
+        public IEnumerable<UsuariosVM> CargarUsuarios()
         {
             HttpResponseMessage vloRespuestaApi;
-            List<Usuarios> vloListado = null;
+            List<UsuariosVM> vloListado = null;
             try
             {
                 vloListado = ObtenerUsuarios();
@@ -256,7 +256,7 @@ namespace SistemaSeguros.API.Controllers
             try
             {
                 Usuario vloInicioLogin = JsonConvert.DeserializeObject<Usuario>(pvcDatos);
-                List<Usuario> vloUsuario = new List<Usuario>();
+                List<UsuariosVM> vloUsuario = new List<UsuariosVM>();
 
                 var existeUsuario = db.Usuarios
                        .Where(b => b.CorreoUsuario == vloInicioLogin.correo && b.Contrasennia == vloInicioLogin.credencial)
@@ -291,11 +291,11 @@ namespace SistemaSeguros.API.Controllers
         /// Método para obtener todos los usuarios.
         /// </summary>
         /// <returns></returns>
-        private List<Usuarios> ObtenerUsuarios()
+        private List<UsuariosVM> ObtenerUsuarios()
         {
-            List<Usuarios> listaUsuarios = new List<Usuarios>();
+            List<UsuariosVM> listaUsuarios = new List<UsuariosVM>();
 
-            db.Usuarios.ToList().ForEach(cp => listaUsuarios.Add(new Usuarios()
+            db.Usuarios.ToList().ForEach(cp => listaUsuarios.Add(new UsuariosVM()
             {
                 Identificacion = cp.Identificacion,
                 NombreUsuario = cp.NombreUsuario,

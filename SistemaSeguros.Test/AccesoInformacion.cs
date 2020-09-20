@@ -17,8 +17,8 @@ namespace SistemaSeguros.Test
 
             Clientes clientes = new Clientes()
             {
-                IdentificacionCliente = "304670958",
-                NombreCliente = "Arelis Orozco",
+                IdentificacionCliente = "3046709587",
+                NombreCliente = "Arelis Orozco prueba",
                 CorreoCliente = "arelisd.25@gmail.com",
                 TelefonoContacto = "71510015"
             };
@@ -39,8 +39,8 @@ namespace SistemaSeguros.Test
 
             Usuarios usuario = new Usuarios()
             {
-                Identificacion = "123654789",
-                NombreUsuario = "Usuario Prueba2",
+                Identificacion = "8795641",
+                NombreUsuario = "Usuario Prueba",
                 Contrasennia = "demo2020",
                 CorreoUsuario = "dco2020@gmail.com"
             };
@@ -62,7 +62,7 @@ namespace SistemaSeguros.Test
             TipoRiesgo riesgo = new TipoRiesgo()
             {
                 Id = 0,
-                Descripcion = "Prueba Riesg44o"
+                Descripcion = "Prueba Riesgo test"
             };
             // Act
             IHttpActionResult actionResult = controller.RegistroTipoRiesgo(riesgo);
@@ -83,7 +83,7 @@ namespace SistemaSeguros.Test
             TipoCubrimiento riesgo = new TipoCubrimiento()
             {
                 Id = 0,
-                Descripcion = "Prueba cubrimiento"
+                Descripcion = "Prueba cubrimiento test"
             };
             // Act
             IHttpActionResult actionResult = controller.RegistroTipoCubrimiento(riesgo);
@@ -105,7 +105,7 @@ namespace SistemaSeguros.Test
             {
                 Id = 0,
                 CoberturaPoliza = 20,
-                Descripcion = "Prueba póliza",
+                Descripcion = "TEST póliza",
                 IdTipoCubrimiento = 1,
                 IdTipoRiesgo = 4,
                 PrecioPoliza = 34220,
@@ -133,7 +133,7 @@ namespace SistemaSeguros.Test
             {
                 Id = 0,
                 CoberturaPoliza = 55,
-                Descripcion = "Prueba póliza",
+                Descripcion = "TEST 2 póliza",
                 IdTipoCubrimiento = 1,
                 IdTipoRiesgo = 4,
                 PrecioPoliza = 34220,

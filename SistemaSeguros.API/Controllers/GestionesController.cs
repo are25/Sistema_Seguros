@@ -18,13 +18,13 @@ namespace SistemaSeguros.API.Controllers
     public class GestionesController : ApiController
     {
         private readonly string vccNomClase = "GestionesController";
-        readonly BDSistemaSeguros db = new BDSistemaSeguros();
+        readonly SistemaSeguros_BD db = new SistemaSeguros_BD();
         #region Métodos Públicos
         [HttpGet]
         public HttpResponseMessage CargarPolizas()
         {
             HttpResponseMessage vloRespuestaApi;
-            List<PolizaPorCliente> vloListado;
+            List<PolizaPorClienteVM> vloListado;
             try
             {
                 vloListado = ObtenerPolizas();
@@ -110,22 +110,23 @@ namespace SistemaSeguros.API.Controllers
         /// Método para obtener todos los usuarios.
         /// </summary>
         /// <returns></returns>
-        private List<PolizaPorCliente> ObtenerPolizas()
+        private List<PolizaPorClienteVM> ObtenerPolizas()
         {
 
-            List<PolizaPorCliente> listaPolizas = new List<PolizaPorCliente>();
+            List<PolizaPorClienteVM> listaPolizas = new List<PolizaPorClienteVM>();
 
             try
             {
-                db.PolizaPorCliente.ToList().ForEach(cp => listaPolizas.Add(new PolizaPorCliente()
+
+                db.PolizaPorCliente.ToList().ForEach(cp => listaPolizas.Add(new PolizaPorClienteVM()
                 {
                     Id = cp.Id,
                     IdCliente = cp.IdCliente,
                     IdEstado = cp.IdEstado,
                     IdPoliza = cp.IdPoliza,
-                    Clientes = new Clientes() { IdentificacionCliente = cp.Clientes.IdentificacionCliente, NombreCliente = cp.Clientes.NombreCliente },
-                    Poliza = new Poliza() { Id = cp.Poliza.Id, Descripcion = cp.Poliza.Descripcion },
-                    EstadosPoliza = new EstadosPoliza() { Id = cp.EstadosPoliza.Id, Descripcion = cp.EstadosPoliza.Descripcion },
+                    Clientes = new ClientesVM() { IdentificacionCliente = cp.Clientes.IdentificacionCliente, NombreCliente = cp.Clientes.NombreCliente },
+                    Poliza = new PolizaVM() { Id = cp.Poliza.Id, Descripcion = cp.Poliza.Descripcion },
+                    EstadosPoliza = new EstadosPolizaVM() { Id = cp.EstadosPoliza.Id, Descripcion = cp.EstadosPoliza.Descripcion },
 
                 }));
                 return listaPolizas;
